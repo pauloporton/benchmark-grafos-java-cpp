@@ -36,9 +36,9 @@ struct Dsu {
 struct Aresta {
     int origem, destino, peso;
 
-    Aresta(int o, int d, int p) {
-        origem = o;
-        destino = d;
+    Aresta(int u, int v, int p) {
+        origem = u;
+        destino = v;
         peso = p;
     }
 
@@ -52,7 +52,7 @@ int kruskal(std::vector<Aresta>& arestas, std::vector<Aresta>& arvore, int n) {
     sort(arestas.begin(), arestas.end());
     Dsu dsu(n);
     int peso_total = 0;
-    for(Aresta& a : arestas) {
+    for(const auto& a : arestas) {
         if(dsu.uni(a.origem, a.destino)) {
             arvore.push_back(a);
             peso_total += a.peso;
