@@ -2,12 +2,12 @@
 #include <iostream>
 #include <queue>
 
-void bfs(std::vector<std::vector<int>>& grafo, std::vector<int>& caminho, std::vector<bool>& usados, int raiz) {
+void bfs(std::vector<std::vector<int>>& grafo, std::vector<int>& caminho, std::vector<bool>& usados, int origem) {
     //criação da fila de caminhamento da bfs
     std::queue<int> fila;
-    //percorrendo o grafo inteiro com bfs a partir da raiz relativa a esse componente até a fila ficar vazia
-    fila.push(raiz);
-    usados[raiz] = true;
+    //percorrendo o grafo inteiro com bfs a partir da origem para esse componente até a fila ficar vazia
+    fila.push(origem);
+    usados[origem] = true;
     while(!fila.empty()) {
         //pega o nó no topo da fila e depois o remove
         int atual = fila.front();
