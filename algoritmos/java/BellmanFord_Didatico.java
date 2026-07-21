@@ -1,8 +1,9 @@
+package algoritmos.java;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BellManFord_Didatico {
+public class BellmanFord_Didatico {
     public static void main(String[] args) {
         int n = 6;
         List<Aresta> arestas = new ArrayList<>();
@@ -61,14 +62,13 @@ public class BellManFord_Didatico {
             }
         }
 
-        for (int i = 1; i < n; i++) {
-            for (Aresta aresta : arestas) {
-                int u = aresta.origem;
-                int v = aresta.destino;
-                int p = aresta.peso;
-                if (dist[u] != Integer.MAX_VALUE / 2 && dist[u] + p < dist[v]) {
-                    return true;
-                }
+        for (Aresta aresta : arestas) {
+            int u = aresta.origem;
+            int v = aresta.destino;
+            int p = aresta.peso;
+            
+            if (dist[u] != Integer.MAX_VALUE / 2 && dist[u] + p < dist[v]) {
+                return true; 
             }
         }
         return false;
