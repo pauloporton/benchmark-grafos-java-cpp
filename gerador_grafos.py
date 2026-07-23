@@ -2,6 +2,55 @@ import random
 import math
 import os
 
+#Métodos auxiliares
+class Dsu:
+
+    def __init__(self, n):
+        self.pais = [-1] * (n + 1)
+
+    def find(self, a):
+        if self.pais[a] < 0:
+            return a
+        self.pais[a] = self.find(self.pais[a])
+        return self.pais[a]
+
+    def uni(self, a, b):
+        a = self.find(a)
+        b = self.find(b)
+
+        if b == a:
+            return False
+
+        if(self.pais[a] < self.pais[b]):
+            self.pais[a] += self.pais[b]
+            self.pais[b] = a
+        else:
+            self.pais[b] += self.pais[a]
+            self.pais[a] = b
+
+        return True
+
+    def conta_componentes(self):
+        contador = 0
+        for i in range(1, len(self.pais)):
+            if self.pais[i] < 0:
+                contador += 1
+        return contador
+
+def normalizar(u, v, direcionado):
+    if direcionado:
+        return (u, v)
+    return (min(u, v), max(u, v))
+
+def calcula_arestas(V, nivel, eh_bellman, direcionado):
+    E = 22.222 * V * nivel / 100 * math.log10(V)
+    if(eh_bellman):
+        E *= 0.01
+    E = int(round(E))
+    max_arestas = V * (V-1) if direcionado else (V * (V-1)) // 2
+    E = min(E, max_arestas)
+    return E
+
 #Geradores de grafos
 def gerar_arvore_balanceada(V):
     arestas = []
@@ -51,25 +100,6 @@ def gerar_grafo_aleatorio(V, E, direcionado, conectado):
             arestas.append(aresta)
     return arestas
 
-def normalizar(u, v, direcionado):
-    if direcionado:
-        return (u, v)
-    return (min(u, v), max(u, v))
-
-def calcula_arestas(V, nivel, eh_bellman, direcionado):
-    E = 22.222 * V * nivel / 100 * math.log10(V)
-    if(eh_bellman):
-        E *= 0.01
-    E = int(round(E))
-    max_arestas = V * (V-1) if direcionado else (V * (V-1)) // 2
-    E = min(E, max_arestas)
-    return E
-
-def adiciona_pesos(arestas):
-    for i in range(len(arestas)):
-        arestas[i] = (arestas[i][0], arestas[i][1], random.randint(-1000, 1000))
-    return arestas
-
 def gerar_grafo_matriz(V):
     lado = math.ceil(math.sqrt(V))
     arestas = []
@@ -81,6 +111,12 @@ def gerar_grafo_matriz(V):
     arestas.reverse()
     return arestas
 
+def adiciona_pesos(arestas):
+    for i in range(len(arestas)):
+        arestas[i] = (arestas[i][0], arestas[i][1], random.randint(-1000, 1000))
+    return arestas
+
+#Escrita de arquivos
 def escrever_arquivo_sem_peso(caminho, V, arestas):
     with open(caminho, 'w') as f:
         f.write(f"{V} {len(arestas)}\n")
@@ -96,39 +132,6 @@ def escrever_arquivo_com_peso(caminho, V, arestas, preservar_ordem = False):
         f.write(f"{V} {len(arestas_embaralhadas)}\n")
         for u, v, peso in arestas_embaralhadas:
             f.write(f"{u} {v} {peso}\n")
-class Dsu:
-
-    def __init__(self, n):
-        self.pais = [-1] * (n + 1)
-
-    def find(self, a):
-        if self.pais[a] < 0:
-            return a
-        self.pais[a] = self.find(self.pais[a])
-        return self.pais[a]
-
-    def uni(self, a, b):
-        a = self.find(a)
-        b = self.find(b)
-
-        if b == a:
-            return False
-
-        if(self.pais[a] < self.pais[b]):
-            self.pais[a] += self.pais[b]
-            self.pais[b] = a
-        else:
-            self.pais[b] += self.pais[a]
-            self.pais[a] = b
-
-        return True
-
-    def conta_componentes(self):
-        contador = 0
-        for i in range(1, len(self.pais)):
-            if self.pais[i] < 0:
-                contador += 1
-        return contador
 
 #Validação dos grafos
 def valida_grafo(V, arestas, esperado):
@@ -175,6 +178,7 @@ def valida_grafo(V, arestas, esperado):
         return False
     return True
 
+#Geração de arquivos
 def gerar_nome_arquivo(algoritmo, caso, V):
     return f"grafos/{algoritmo}/{caso}/{V}.txt"
 
@@ -280,6 +284,7 @@ def gerar_todos_os_grafos(diretorio_saida, seed, escalas, CASOS_POR_ALGORITMO):
 
     print("Geração completa.")
 
+#Main
 def main():
     CASOS_POR_ALGORITMO = {
     "DFS":           ["melhor", "pior", "esparso", "medio", "denso"],
@@ -292,4 +297,3 @@ def main():
     gerar_todos_os_grafos("grafos_teste", 42, escalas_teste, CASOS_POR_ALGORITMO)
 
 main()
-
