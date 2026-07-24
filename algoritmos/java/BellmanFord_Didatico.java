@@ -25,18 +25,6 @@ public class BellmanFord_Didatico {
         }
     }
 
-    public static class Aresta {
-        int origem;
-        int destino;
-        int peso;
-
-        public Aresta(int origem, int destino, int peso) {
-            this.origem = origem;
-            this.destino = destino;
-            this.peso = peso;
-        }
-    }
-
     public static void montaArestas(List<Aresta> arestas) {
         arestas.add(new Aresta(1, 2, 2));
         arestas.add(new Aresta(1, 3, 9));
