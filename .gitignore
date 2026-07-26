@@ -67,3 +67,11 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Maven (benchmark-jmh)
+benchmark-jmh/target/
+benchmark-jmh/dependency-reduced-pom.xml
+
+# Ambiente virtual Python
+benchmark-jmh/venv/
+venv/
