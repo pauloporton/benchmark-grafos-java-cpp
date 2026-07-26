@@ -32,13 +32,8 @@ public class BellmanFordBenchmark {
     @Setup(Level.Trial)
     public void setup() throws Exception {
         String caminho = "../grafos/BellmanFord/" + caso + "/" + tamanho + ".txt";
-        LeitorGrafo.GrafoLido lido = LeitorGrafo.lerArestasComPeso(caminho);
-
-        n = lido.v;
-        arestas = new ArrayList<>(lido.arestas.size());
-        for (LeitorGrafo.ArestaSimples a : lido.arestas) {
-            arestas.add(new Aresta(a.origem, a.destino, a.peso));
-        }
+        arestas = LeitorGrafo.lerArestas(caminho);
+        n = LeitorGrafo.lerNumeroVertices(caminho);
     }
 
     // Benchmark (por adicionar o return, a jmh já previne a eliminação de "código morto")
