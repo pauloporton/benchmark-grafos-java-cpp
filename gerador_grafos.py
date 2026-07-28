@@ -43,9 +43,9 @@ def normalizar(u, v, direcionado):
     return (min(u, v), max(u, v))
 
 def calcula_arestas(V, nivel, eh_bellman, direcionado):
-    E = 22.222 * V * nivel / 100 * math.log10(V)
+    E = 22.22222 * V * nivel / 100 * math.log10(V)
     if(eh_bellman):
-        E *= 0.01
+        E *= 0.03
     E = int(round(E))
     max_arestas = V * (V-1) if direcionado else (V * (V-1)) // 2
     E = min(E, max_arestas)
@@ -72,6 +72,17 @@ def gerar_floresta_fragmentada(V, num_comp, s = 1.5):
         tamanhos.append(tamanho)
         soma += tamanho
     tamanhos[0] -= soma - V
+
+    if tamanhos[0] < 1:
+        deficit = 1 - tamanhos[0]
+        tamanhos[0] = 1
+        i = 1
+        while deficit > 0 and i < len(tamanhos):
+            reduzir = min(deficit, tamanhos[i] - 1)
+            tamanhos[i] -= reduzir
+            deficit -= reduzir
+            i += 1
+
     arestas = []
     regulacao = 0
     for t in tamanhos:
@@ -221,9 +232,9 @@ def gerar_estrutura(algoritmo, caso, V):
             arestas = adiciona_pesos(arestas)
             esperado = {"num_arestas": V - 1, "conectado": True, "aciclico": True}
         elif caso == "pior":
-            arestas = gerar_floresta_fragmentada(V, V//5, 1.5)
+            arestas = gerar_floresta_fragmentada(V, V//3, 1.5)
             arestas = adiciona_pesos(arestas)
-            esperado = {"num_componentes": V//5, "conectado": False, "aciclico": False}
+            esperado = {"num_componentes": V//3, "conectado": False, "aciclico": False}
         elif caso == "esparso":
             arestas = gerar_grafo_aleatorio(V, calcula_arestas(V, 10, False, True), True, False)
             arestas = adiciona_pesos(arestas)
@@ -285,6 +296,7 @@ def gerar_todos_os_grafos(diretorio_saida, seed, escalas, CASOS_POR_ALGORITMO):
     print("Geração completa.")
 
 #Main
+
 def main():
     CASOS_POR_ALGORITMO = {
     "DFS":           ["melhor", "pior", "esparso", "medio", "denso"],
@@ -293,7 +305,7 @@ def main():
     "BellmanFord":   ["melhor", "pior", "esparso", "medio", "denso"],
     }
 
-    escalas_teste = [10, 30, 100]
+    escalas_teste = [10, 30, 100, 300, 1000, 3000, 10000, 30000, 100000]
     gerar_todos_os_grafos("grafos_teste", 42, escalas_teste, CASOS_POR_ALGORITMO)
 
 main()
