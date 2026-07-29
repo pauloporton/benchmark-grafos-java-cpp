@@ -20,7 +20,7 @@ public class BFSBenchmark {
     public String caso;
 
     // Número de vértices
-    @Param({"10", "30", "100"})
+    @Param({"10", "30", "100", "300", "1000", "3000", "10000", "30000", "100000"})
     public String tamanho;
 
     // Variáveis internas

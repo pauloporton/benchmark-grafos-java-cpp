@@ -10,8 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.AverageTime) //Tempo médio por operação
 @OutputTimeUnit(TimeUnit.MICROSECONDS) //Unidade de tempo do resultado (microssegundos)
-@Warmup(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS) // 3 iterações de aquecimento durando 1 segundo cada
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS) // 5 iterações após o aquecimento que vão contar pro resultado (valor final é a média das 5)
+@Warmup(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS) // 2 iterações de aquecimento durando 1 segundo cada
+@Measurement(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS) // 3 iterações após o aquecimento que vão contar pro resultado (valor final é a média das 3)
 @Fork(1) 
 @State(Scope.Benchmark)
 public class BellmanFordBenchmark {
@@ -21,7 +21,7 @@ public class BellmanFordBenchmark {
     public String caso;
 
     // Número de vertices
-    @Param({"10", "30", "100"})
+    @Param({"10", "30", "100", "300", "1000", "3000", "10000", "30000", "100000"})
     public String tamanho;
 
     // Variáveis internas
