@@ -124,7 +124,7 @@ def gerar_grafo_matriz(V):
 
 def adiciona_pesos(arestas):
     for i in range(len(arestas)):
-        arestas[i] = (arestas[i][0], arestas[i][1], random.randint(-1000, 1000))
+        arestas[i] = (arestas[i][0], arestas[i][1], random.randint(-300, 1000))
     return arestas
 
 #Escrita de arquivos
