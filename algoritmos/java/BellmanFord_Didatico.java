@@ -39,6 +39,8 @@ public class BellmanFord_Didatico {
         dist[origem] = 0;
 
         for (int i = 1; i < n; i++) {
+            boolean troca = false;
+
             for (Aresta aresta : arestas) {
                 int u = aresta.origem;
                 int v = aresta.destino;
@@ -47,6 +49,10 @@ public class BellmanFord_Didatico {
                 if (dist[u] != Integer.MAX_VALUE / 2 && dist[u] + p < dist[v]) {
                     dist[v] = dist[u] + p;
                 }
+            }
+
+            if (!troca) {
+                break;
             }
         }
 

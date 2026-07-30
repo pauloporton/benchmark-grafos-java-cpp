@@ -1,73 +1,84 @@
 """
-Lê o resultado.json gerado pelo JMH e gera um gráfico separado para cada
-combinação (algoritmo, caso), com o tamanho do grafo (V) no eixo X e o
-tempo médio no eixo Y.
+Lê o CSV normalizado (experiments/results/resultados_normalizados.csv) e gera
+um gráfico separado para cada combinação (algoritmo, caso), com o tamanho do
+grafo (V) no eixo X e o tempo médio no eixo Y — uma linha por linguagem
+presente no CSV (Java e/ou C++).
 
 Uso:
-    python plot_resultados.py resultado.json
-    python plot_resultados.py resultado.json --saida graficos/
+    python plot_resultados.py
+    python plot_resultados.py experiments/results/resultados_normalizados.csv --saida static/
 """
-import json
+import csv
 import os
 import sys
 import matplotlib.pyplot as plt
 
+CORES_POR_LINGUAGEM = {
+    "Java": "#4C72B0",
+    "C++": "#DD8452",
+}
 
-def carregar(caminho_json):
-    with open(caminho_json, encoding="utf-8") as f:
-        return json.load(f)
+
+def carregar(caminho_csv):
+    with open(caminho_csv, newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
 
 
-def extrair_series(dados):
+def extrair_series(linhas):
     """
-    Agrupa os resultados por (algoritmo, caso), cada grupo virando uma série
-    de pontos (tamanho, tempo_medio, erro), ordenada por tamanho crescente.
-
-    Cada item de "dados" tem o formato:
-      benchmark: "benchmark.BFSBenchmark.benchmarkBFS"
-      params: {"caso": "denso", "tamanho": "100"}
-      primaryMetric.score: tempo médio
-      primaryMetric.scoreError: margem de erro (desvio)
-      primaryMetric.scoreUnit: unidade (ex: "us/op")
+    Agrupa os resultados por (algoritmo, caso, linguagem), cada grupo virando
+    uma série de pontos (tamanho, tempo_medio, erro), ordenada por tamanho.
     """
-    series = {}  # (algoritmo, caso) -> lista de (tamanho, score, erro, unidade)
+    series = {}  # (algoritmo, caso, linguagem) -> lista de (tamanho, tempo, erro, unidade)
 
-    for item in dados:
-        algoritmo = item["benchmark"].split(".")[-2]  # ex: BFSBenchmark
-        params = item.get("params", {})
-        caso = params.get("caso", "-")
-        tamanho = int(params.get("tamanho", 0))
-        score = item["primaryMetric"]["score"]
-        erro = item["primaryMetric"].get("scoreError", 0)
-        unidade = item["primaryMetric"]["scoreUnit"]
-
-        chave = (algoritmo, caso)
-        series.setdefault(chave, []).append((tamanho, score, erro, unidade))
+    for linha in linhas:
+        chave = (linha["algoritmo"], linha["caso"], linha["linguagem"])
+        ponto = (
+            int(linha["tamanho"]),
+            float(linha["tempo_medio"]),
+            float(linha["erro"]),
+            linha["unidade"],
+        )
+        series.setdefault(chave, []).append(ponto)
 
     for chave in series:
-        series[chave].sort(key=lambda ponto: ponto[0])  # ordena por tamanho
+        series[chave].sort(key=lambda ponto: ponto[0])
 
     return series
 
 
-def plotar_series(series, pasta_saida="graficos"):
+def agrupar_por_algoritmo_caso(series):
+    """Reagrupa (algoritmo, caso, linguagem) -> pontos em (algoritmo, caso) -> {linguagem: pontos}."""
+    agrupado = {}
+    for (algoritmo, caso, linguagem), pontos in series.items():
+        agrupado.setdefault((algoritmo, caso), {})[linguagem] = pontos
+    return agrupado
+
+
+def plotar(agrupado, pasta_saida="static"):
     os.makedirs(pasta_saida, exist_ok=True)
 
-    for (algoritmo, caso), pontos in series.items():
-        tamanhos = [p[0] for p in pontos]
-        tempos = [p[1] for p in pontos]
-        erros = [p[2] for p in pontos]
-        unidade = pontos[0][3]
-
+    for (algoritmo, caso), por_linguagem in agrupado.items():
         plt.figure(figsize=(6, 4.5))
-        plt.errorbar(
-            tamanhos, tempos, yerr=erros,
-            marker="o", capsize=4, color="#4C72B0", linewidth=2
-        )
+
+        unidade = "?"
+        for linguagem, pontos in sorted(por_linguagem.items()):
+            tamanhos = [p[0] for p in pontos]
+            tempos = [p[1] for p in pontos]
+            erros = [p[2] for p in pontos]
+            unidade = pontos[0][3]
+
+            cor = CORES_POR_LINGUAGEM.get(linguagem, "#55A868")
+            plt.errorbar(
+                tamanhos, tempos, yerr=erros,
+                marker="o", capsize=4, color=cor, linewidth=2,
+                label=linguagem,
+            )
+
         plt.xlabel("Tamanho do grafo (V)")
         plt.ylabel(f"Tempo médio ({unidade})")
         plt.title(f"{algoritmo} — caso: {caso}")
-        plt.xticks(tamanhos)  # só marca os tamanhos que existem (10, 30, 100...)
+        plt.legend()
         plt.grid(True, linestyle="--", alpha=0.4)
         plt.tight_layout()
 
@@ -81,12 +92,13 @@ def plotar_series(series, pasta_saida="graficos"):
 
 if __name__ == "__main__":
     argumentos = sys.argv[1:]
-    caminho_json = argumentos[0] if argumentos and not argumentos[0].startswith("--") else "resultado.json"
+    caminho_csv = argumentos[0] if argumentos and not argumentos[0].startswith("--") else "experiments/results/resultados_normalizados.csv"
 
-    pasta_saida = "graficos"
+    pasta_saida = "static"
     if "--saida" in argumentos:
         pasta_saida = argumentos[argumentos.index("--saida") + 1]
 
-    dados = carregar(caminho_json)
-    series = extrair_series(dados)
-    plotar_series(series, pasta_saida)
+    linhas = carregar(caminho_csv)
+    series = extrair_series(linhas)
+    agrupado = agrupar_por_algoritmo_caso(series)
+    plotar(agrupado, pasta_saida)
