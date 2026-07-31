@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 @OutputTimeUnit(TimeUnit.MICROSECONDS) //Unidade de tempo do resultado (microssegundos)
 @Warmup(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS) // 3 iterações de aquecimento durando 1 segundo cada
 @Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS) // 5 iterações após o aquecimento que vão contar pro resultado (valor final é a média das 5)
+@Fork(1)
 @State(Scope.Benchmark)
 public class DFSBenchmark {
 
