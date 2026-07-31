@@ -65,7 +65,7 @@ public class LeitorGrafo {
                 String[] partes = br.readLine().split(" ");
                 int u = Integer.parseInt(partes[0]);
                 int v = Integer.parseInt(partes[1]);
-                int peso = Integer.parseInt(partes[2])
+                int peso = Integer.parseInt(partes[2]);
 
                 arestas.add(new Aresta(u, v, peso));
             }

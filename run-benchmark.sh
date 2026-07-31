@@ -14,30 +14,24 @@ java -jar target/benchmarks.jar \
   -rf json \
   -rff experiments/results/resultado.json
 
-<<<<<<< HEAD
 echo "Medindo pico de memória (RSS) de cada combinação..."
-=======
 echo "Medindo pico de mem├│ria (RSS) de cada combina├º├úo..."
->>>>>>> 8b72fb6c033f7be0fc0d2fcd81618a965e10bce6
 if [ -f "medir_memoria.sh" ]; then
     chmod +x medir_memoria.sh
     ./medir_memoria.sh
 else
-<<<<<<< HEAD
     echo "Aviso: medir_memoria.sh não encontrado em benchmark-jmh/, pulando essa etapa."
-=======
     echo "Aviso: medir_memoria.sh n├úo encontrado em benchmark-jmh/, pulando essa etapa."
->>>>>>> 8b72fb6c033f7be0fc0d2fcd81618a965e10bce6
 fi
 
 cd ..   # <-- volta para a raiz do projeto antes de entrar no C++
 
 echo "Compilando benchmarks C++..."
 cd benchmark-cpp
-g++ -O2 -std=c++17 benchmark_bfs.cpp -o BFS_benchmark -lbenchmark -lpthread
-g++ -O2 -std=c++17 benchmark_dfs.cpp -o DFS_benchmark -lbenchmark -lpthread
-g++ -O2 -std=c++17 benchmark_kruskal.cpp -o Kruskal_benchmark -lbenchmark -lpthread
-g++ -O2 -std=c++17 benchmark_bellmanford.cpp -o BellmanFord_benchmark -lbenchmark -lpthread
+g++ -O2 -std=c++17 BFS_benchmark.cpp -o BFS_benchmark -lbenchmark -lpthread
+g++ -O2 -std=c++17 DFS_benchmark.cpp -o DFS_benchmark -lbenchmark -lpthread
+g++ -O2 -std=c++17 Kruskal_benchmark.cpp -o Kruskal_benchmark -lbenchmark -lpthread
+g++ -O2 -std=c++17 BellmanFord_benchmark.cpp -o BellmanFord_benchmark -lbenchmark -lpthread
 
 mkdir -p resultados
 
@@ -56,16 +50,13 @@ echo "Rodando Bellman-Ford (C++)..."
 echo "Medindo memoria (C++)..."
 chmod +x ./medir_memoria_cpp.sh
 ./medir_memoria_cpp.sh
-
-<<<<<<< HEAD
+: '
 cd ..   # volta pra raiz de novo, antes das próximas etapas
 
 echo "Gerando gráficos..."
-=======
 cd ..   # volta pra raiz de novo, antes das pr├│ximas etapas
 
 echo "Gerando gráficos..."
->>>>>>> 8b72fb6c033f7be0fc0d2fcd81618a965e10bce6
 if [ -d "venv" ]; then
     source venv/bin/activate
 fi
@@ -73,3 +64,4 @@ python3 normalizar_java.py benchmark-jmh/experiments/results/resultado.json
 python3 plot_resultados.py --saida static/
 
 echo "Processo finalizado com sucesso."
+'
