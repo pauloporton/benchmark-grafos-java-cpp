@@ -15,13 +15,11 @@ java -jar target/benchmarks.jar \
   -rff experiments/results/resultado.json
 
 echo "Medindo pico de memória (RSS) de cada combinação..."
-echo "Medindo pico de mem├│ria (RSS) de cada combina├º├úo..."
 if [ -f "medir_memoria.sh" ]; then
     chmod +x medir_memoria.sh
     ./medir_memoria.sh
 else
     echo "Aviso: medir_memoria.sh não encontrado em benchmark-jmh/, pulando essa etapa."
-    echo "Aviso: medir_memoria.sh n├úo encontrado em benchmark-jmh/, pulando essa etapa."
 fi
 
 cd ..   # <-- volta para a raiz do projeto antes de entrar no C++
@@ -36,16 +34,16 @@ g++ -O2 -std=c++17 BellmanFord_benchmark.cpp -o BellmanFord_benchmark -lbenchmar
 mkdir -p resultados
 
 echo "Rodando BFS (C++)..."
-./BFS_benchmark --benchmark_repetitions=20 --benchmark_format=json --benchmark_out=resultados/resultados_bfs.json
+./BFS_benchmark --benchmark_repetitions=7 --benchmark_format=json --benchmark_out=resultados/resultados_bfs.json
 
 echo "Rodando DFS (C++)..."
-./DFS_benchmark --benchmark_repetitions=20 --benchmark_format=json --benchmark_out=resultados/resultados_dfs.json
+./DFS_benchmark --benchmark_repetitions=7 --benchmark_format=json --benchmark_out=resultados/resultados_dfs.json
 
 echo "Rodando Kruskal (C++)..."
-./Kruskal_benchmark --benchmark_repetitions=20 --benchmark_format=json --benchmark_out=resultados/resultados_kruskal.json
+./Kruskal_benchmark --benchmark_repetitions=7 --benchmark_format=json --benchmark_out=resultados/resultados_kruskal.json
 
 echo "Rodando Bellman-Ford (C++)..."
-./BellmanFord_benchmark --benchmark_repetitions=20 --benchmark_format=json --benchmark_out=resultados/resultados_bellmanford.json
+./BellmanFord_benchmark --benchmark_repetitions=7 --benchmark_format=json --benchmark_out=resultados/resultados_bellmanford.json
 
 echo "Medindo memoria (C++)..."
 chmod +x ./medir_memoria_cpp.sh

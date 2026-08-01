@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.AverageTime) //Tempo médio por operação
 @OutputTimeUnit(TimeUnit.MICROSECONDS) //Unidade de tempo do resultado (microssegundos)
 @Warmup(iterations = 3, time = 1, timeUnit = TimeUnit.SECONDS) // 3 iterações de aquecimento durando 1 segundo cada
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS) // 5 iterações após o aquecimento que vão contar pro resultado (valor final é a média das 5)
+@Measurement(iterations = 7, time = 1, timeUnit = TimeUnit.SECONDS) // 7 iterações após o aquecimento que vão contar pro resultado (valor final é a média das 7)
 @Fork(1) 
 @State(Scope.Benchmark)
 public class KruskalBenchmark {
