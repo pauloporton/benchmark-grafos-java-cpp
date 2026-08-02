@@ -48,18 +48,16 @@ echo "Rodando Bellman-Ford (C++)..."
 echo "Medindo memoria (C++)..."
 chmod +x ./medir_memoria_cpp.sh
 ./medir_memoria_cpp.sh
-: '
-cd ..   # volta pra raiz de novo, antes das próximas etapas
 
-echo "Gerando gráficos..."
-cd ..   # volta pra raiz de novo, antes das pr├│ximas etapas
-
-echo "Gerando gráficos..."
-if [ -d "venv" ]; then
-    source venv/bin/activate
+cd ..   # volta pra raiz antes de gerar os gráficos
+ 
+echo "Gerando gráficos (tempo e memória, Java vs C++)..."
+if [ -d "benchmark-jmh/venv" ]; then
+    source benchmark-jmh/venv/bin/activate
 fi
-python3 normalizar_java.py benchmark-jmh/experiments/results/resultado.json
-python3 plot_resultados.py --saida static/
-
+python3 analise_resultados/plotar_tempo.py
+python3 analise_resultados/plotar_memoria.py
+ 
 echo "Processo finalizado com sucesso."
-'
+echo "Gráficos de tempo em static/tempo/"
+echo "Gráficos de memória em static/memoria/"
