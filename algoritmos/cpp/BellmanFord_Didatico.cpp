@@ -51,6 +51,8 @@ bool bellmanford(std::vector<Aresta>& arestas, std::vector<int>& dist, int n, in
     return false;
 }
 
+//Função que monta as arestas com valores fixos, caso queira testar seu próprio grafo, altere esses valores
+//O formato da aresta é ({origem, destino, peso})
 void monta_arestas(std::vector<Aresta>& arestas) {
     arestas.push_back({1, 2, 2});
     arestas.push_back({1, 3, 9});
@@ -61,10 +63,13 @@ void monta_arestas(std::vector<Aresta>& arestas) {
 }
 
 int main() {
+    //grafo com 6 nós
     int n = 6;
     std::vector<Aresta> arestas;
     monta_arestas(arestas);
+    //vetor de distâncias inicializado com distâncias "infinitas" representando nós inalcançáveis, inicialmente nenhum é alcançável
     std::vector<int> dist(n + 1, INT_MAX);
+    //caso não haja ciclos negativos, imprime a distância da origem para todos os nós
     if(!bellmanford(arestas, dist, n, 1)) {
         for(int i = 1; i <= n; i++) {
             if(dist[i] != INT_MAX) {
