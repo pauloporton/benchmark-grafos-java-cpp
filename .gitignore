@@ -75,3 +75,4 @@ benchmark-jmh/dependency-reduced-pom.xml
 # Ambiente virtual Python
 benchmark-jmh/venv/
 venv/
+benchmark-jmh/bin/
