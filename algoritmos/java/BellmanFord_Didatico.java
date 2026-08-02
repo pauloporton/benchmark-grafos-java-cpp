@@ -39,7 +39,7 @@ public class BellmanFord_Didatico {
         dist[origem] = 0;
 
         for (int i = 1; i < n; i++) {
-            boolean troca = false;
+            boolean atualizou = false;
 
             for (Aresta aresta : arestas) {
                 int u = aresta.origem;
@@ -48,10 +48,11 @@ public class BellmanFord_Didatico {
 
                 if (dist[u] != Integer.MAX_VALUE / 2 && dist[u] + p < dist[v]) {
                     dist[v] = dist[u] + p;
+                    atualizou = true;
                 }
             }
 
-            if (!troca) {
+            if (!atualizou) {
                 break;
             }
         }

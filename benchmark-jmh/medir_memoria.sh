@@ -28,7 +28,7 @@ for bench in "${BENCHMARKS[@]}"; do
       # -f 1: um fork (já é o padrão, mas deixa explícito)
       # -wi/-i baixos aqui só para não gastar tempo demais medindo memória;
       # ajuste se quiser warmup/iterações completos também na medição de memória
-      /usr/bin/time -v java -jar "$JAR" "$bench" \
+      /usr/bin/time -v java -Xms64m -Xmx512m -jar "$JAR" "$bench" \
         -p caso="$caso" -p tamanho="$tamanho" \
         -f 1 -wi 1 -i 1 \
         > /dev/null 2> "$log_tmp"

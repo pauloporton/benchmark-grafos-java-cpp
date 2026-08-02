@@ -64,7 +64,7 @@ long long dfs_completo(std::vector<std::vector<int>>& adj, int V) {
 void registrarBenchmarksDFS() {
     const std::vector<std::string> casos = {"melhor", "pior", "esparso", "medio", "denso"};
     const std::vector<int> escalas = {10, 30, 100, 300, 1000, 3000, 10000, 30000, 100000};
-
+    
     for (const auto& caso : casos) {
         for (int V : escalas) {
             std::string caminho = "../grafos/DFS/" + caso + "/" + std::to_string(V) + ".txt";

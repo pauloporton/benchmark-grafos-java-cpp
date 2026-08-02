@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JAVA_CSV = os.path.join(RAIZ, "benchmark-jmh", "experiments", "results", "memoria_resultados.csv")
 CPP_CSV = os.path.join(RAIZ, "benchmark-cpp", "resultados", "memoria_cpp.csv")
-PASTA_SAIDA = os.path.join(RAIZ, "static", "memoria")
+PASTA_SAIDA = os.path.join(RAIZ, "graficos", "memoria")
 
 CORES = {"Java": "#4C72B0", "C++": "#DD8452"}
 

@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JAVA_JSON = os.path.join(RAIZ, "benchmark-jmh", "experiments", "results", "resultado.json")
 CPP_JSONS = os.path.join(RAIZ, "benchmark-cpp", "resultados", "resultados_*.json")
-PASTA_SAIDA = os.path.join(RAIZ, "static", "tempo")
+PASTA_SAIDA = os.path.join(RAIZ, "graficos", "tempo")
 
 CORES = {"Java": "#4C72B0", "C++": "#DD8452"}
 
