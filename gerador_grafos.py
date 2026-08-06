@@ -127,6 +127,11 @@ def adiciona_pesos(arestas):
         arestas[i] = (arestas[i][0], arestas[i][1], random.randint(-300, 1000))
     return arestas
 
+def adiciona_pesos_ordenado(arestas):
+    for i in range(len(arestas)):
+        arestas[i] = (arestas[i][0], arestas[i][1], i + 1)
+    return arestas
+
 #Escrita de arquivos
 def escrever_arquivo_sem_peso(caminho, V, arestas):
     with open(caminho, 'w') as f:
@@ -229,7 +234,7 @@ def gerar_estrutura(algoritmo, caso, V):
     elif algoritmo == "Kruskal":
         if caso == "melhor":
             arestas = gerar_arvore_balanceada(V)
-            arestas = adiciona_pesos(arestas)
+            arestas = adiciona_pesos_ordenado(arestas)
             esperado = {"num_arestas": V - 1, "conectado": True, "aciclico": True}
         elif caso == "pior":
             arestas = gerar_floresta_fragmentada(V, V//3, 1.5)
