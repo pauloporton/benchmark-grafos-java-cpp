@@ -2,9 +2,63 @@
 
 Projeto desenvolvido para a disciplina de Estrutura de Dados e Algoritmos do curso de Ciência da Computação da Universidade Federal de Campina Grande.
 
+## Sumário
+
+- [Introdução](#introdução)
+- [Contextualização](#contextualização)
+  - [Descrição dos quatro algoritmos escolhidos](#descrição-dos-quatro-algoritmos-escolhidos)
+- [Como rodar o experimento](#como-rodar-o-experimento)
+  - [Dependências](#dependências)
+  - [Comandos](#comandos)
+- [Metodologia](#metodologia)
+  - [Primeiro passo: Implementação dos grafos](#primeiro-passo-implementação-dos-grafos)
+  - [Segundo passo: Implementação dos algoritmos](#segundo-passo-implementação-dos-algoritmos)
+  - [Terceiro passo: Geração de entradas](#terceiro-passo-geração-de-entradas)
+  - [Quarto passo: Ambientes de teste e análise dos resultados](#quarto-passo-ambientes-de-teste-e-análise-dos-resultados)
+- [Casos de teste](#casos-de-teste)
+  - [DFS](#dfs)
+  - [BFS](#bfs)
+  - [Kruskal](#kruskal)
+  - [Bellman-Ford](#bellman-ford)
+- [Hipótese teórica](#hipótese-teórica)
+- [Análise dos resultados](#análise-dos-resultados)
+  - [Pico de memória RAM utilizada nas duas linguagens](#pico-de-memória-ram-utilizada-nas-duas-linguagens)
+  - [Tempo de execução de cada algoritmo para ambas as linguagens](#tempo-de-execução-de-cada-algoritmo-para-ambas-as-linguagens)
+- [Ameaças à validade do experimento](#ameaças-à-validade-do-experimento)
+- [Conclusão](#conclusão)
+- [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos)
+- [Referências](#referências)
+
 ## Introdução
 
 Java e C++ são duas linguagens de programação extremamente utilizadas nos mais diversos tipos de aplicações. Adotando abordagens distintas, C++ oferece um melhor controle de memória e tempo de execução, enquanto Java se destaca na portabilidade e acionamento automático do Garbage Collector. Na prática, o desempenho de um algoritmo pode ser diretamente impactado pela escolha da linguagem em que será implementado. Nesse projeto, iremos realizar um estudo comparativo de desempenho de algoritmos clássicos de grafos, avaliando sua eficiência na prática quando implementados nessas duas linguagens.
+
+## Contextualização
+
+No projeto, realizamos um estudo comparativo de desempenho entre quatro algoritmos clássicos de grafos: BFS, DFS, Kruskal e Bellman-Ford. Avaliamos a eficiência prática quando implementados em Java e em C++. Para fazer essa distinção, foram medidos o tempo de execução e o pico de memória utilizada em cada algoritmo, variando o tamanho e a estrutura dos grafos de entrada, para identificar não apenas qual das duas linguagens é mais rápida, mas também em quais condições e por quais motivos a diferença acontece.
+
+### Descrição dos quatro algoritmos escolhidos
+
+**Busca em Profundidade (DFS)**
+O DFS é um algoritmo que tem como objetivo visitar todos os vértices alcançáveis de uma origem, explorando cada ramo o mais fundo possível antes de retroceder. Ele é usado por exemplo para detecção de ciclos, ordenação topológica e busca de componentes conexos.
+
+Cada vértice é visitado exatamente uma vez, marcado como usado logo na primeira visita, o que garante que nenhum vértice seja processado novamente, por isso é $O(V)$. Para cada vértice visitado, o algoritmo percorre sua lista de adjacência inteira para descobrir os vizinhos, e cada aresta aparece na lista de adjacência de seus dois extremos (grafo bidirecional). Como cada aresta é percorrida um número constante de vezes ao longo de toda a execução, o custo total de percorrer todas as listas de adjacência soma $O(E)$. Somando as duas parcelas, chega-se a $O(V + E)$.
+
+**Busca em Largura (BFS)**
+O BFS também é um algoritmo de percurso em grafos, mas com o objetivo de explorar os vértices por níveis de distância a partir de uma origem, visitando primeiro todos os vizinhos diretos antes de avançar. É o algoritmo indicado quando se busca o menor caminho em número de arestas, como em cálculo de grau de separação ou busca de redes.
+
+O raciocínio é o mesmo do DFS, muda apenas a estrutura de controle: no BFS, cada vértice entra e sai da fila exatamente uma vez, $O(V)$, e ao processar um vértice, a lista de adjacência inteira é percorrida para enfileirar os vizinhos não visitados, o que soma $O(E)$ ao longo de toda a execução. Por isso, BFS e DFS compartilham a mesma complexidade assintótica, $O(V + E)$, ainda que com constantes e padrões de acesso à memória diferentes.
+
+**Algoritmo de Kruskal**
+O Kruskal é um algoritmo guloso que tem como objetivo construir a árvore geradora mínima de um grafo ponderado e conexo, a subárvore que conecta todos os vértices com o menor peso total de arestas. É indicado em problemas de otimização de custo em redes, como projeto de infraestrutura de menor custo (elétrica, água, telecomunicações).
+
+Possui duas fases com custos distintos. A primeira é a ordenação das $E$ arestas por peso, que domina o tempo total, pois qualquer algoritmo de ordenação por comparação custa $O(E \log E)$. A segunda fase percorre as arestas já ordenadas uma única vez, $O(E)$, aplicando para cada uma duas operações de Union-Find, que com as otimizações de união por rank e compressão de caminho, cada operação custa $O(\alpha(V))$, onde $\alpha$ é a função inversa de Ackermann, na prática, uma constante menor que 5 para qualquer entrada realista. Logo, a segunda fase custa $O(E \cdot \alpha(V))$, que é dominada pela ordenação. Como $E \log E$ cresce mais rápido que $E \cdot \alpha(V)$, o termo de ordenação prevalece, resultando em $O(E \log E)$.
+
+**Algoritmo de Bellman-Ford**
+Tem como objetivo encontrar o caminho mínimo de um vértice de origem para todos os demais vértices de um grafo ponderado e direcionado. Ele é inidicado quando o grafo pode conter arestas de peso negativo, ou quando precisa detectar a existência de ciclos negativos.
+
+O algoritmo repete um laço de relaxamento sobre todas as $E$ arestas, e esse laço é executado até $V - 1$ vezes. Como cada uma das $V - 1$ rodadas custa $O(E)$, o custo total é $O(V . E)$. É essa multiplicação entre vértices e arestas que tornal o Bellman-Ford significativamente mais caro em grafos densos, onde E se aproxima de $V²$.
+
 
 ## Como rodar o experimento
 
@@ -38,85 +92,191 @@ ps aux | grep run-benchmark
 
 A pesquisa adotou uma abordagem experimental controlada, seguindo esses passos:
 
-### Implementação dos grafos
+### Primeiro passo: Implementação dos grafos
 
-Os vértices são apenas representados como inteiros, não guardando informações adicionais, a fim de simplificar a implementação dos testes. Cada inteiro é um identificador de um vértice que corresponde a sua ordem de inserção no grafo. Todos os grafos são 1-indexado. Nenhum dos grafos usados é garantidamente conectado.
+Os vértices são apenas representados como inteiros, não guardando informações adicionais, a fim de simplificar a implementação dos testes. Cada inteiro é um identificador de um vértice que corresponde à sua ordem de inserção no grafo. Todos os grafos são 1-indexados. Nenhum dos grafos usados é garantidamente conectado.
 
-Para grafos não ponderados e bidirecionais usados na BFS e DFS foram usadas listas de adjacência (listas de listas de inteiros) para a representação do grafo, sendo cada posição da lista a representação de um vértice e cada elemento dessa lista um vizinho do vértice correspondente.
+- Para grafos não ponderados e bidirecionais usados na BFS e DFS, foram usadas listas de adjacência (listas de listas de inteiros) para a representação do grafo, sendo cada posição da lista a representação de um vértice e cada elemento dessa lista um vizinho do vértice correspondente.
+- Para grafos direcionados e ponderados, foram usadas classes e estruturas de arestas, guardando o vértice de origem, vértice de destino e peso da aresta como inteiros. Para a representação dos grafos, foram usadas listas de arestas. A ausência de um vértice na lista de arestas não significa a inexistência dele no grafo, apenas indica a ausência de conexões com outros vértices, de fato, o grafo sempre possui a quantidade de vértices indicada no teste.
 
-Para grafos direcionados e ponderados foram usadas classes e estruturas de arestas, guardando o vértice de origem, vértice de destino e peso da aresta como inteiros. Para a representação dos grafos, foram usadas listas de arestas. A ausência de um vértice na lista de arestas não significa a inexistência dele no grafo, apenas indica a ausência de conexões com outros vértices, de fato, o grafo sempre possui a quantidade de vértices indicada no teste.
+### Segundo passo: Implementação dos algoritmos
 
-### Implementação dos algoritmos
+- **DFS** — Implementação recursiva, caminhando uma vez por todos os vértices do grafo, mesmo com grafos desconectados. Evita caminhar por vértices usados com um array de booleanos marcando os vértices usados.
+- **BFS** — Implementação iterativa usando uma `Queue` de vértices para garantir o caminhamento em largura e um array de booleanos marcando vértices usados. Caminha por todos os vértices do grafo, mesmo que seja desconectado.
+- **Kruskal** — Implementação gulosa, ordenando a lista de arestas por seus pesos e escolhendo sempre a menor aresta disponível que não gera ciclos para adicionar à árvore. A implementação da DSU usa um array de inteiros para representar os pais, sendo as raízes dos componentes representadas por números negativos indicando a quantidade de vértices em seu componente, e um inteiro representando o pai do vértice para os outros casos. Caso a quantidade de arestas necessária para formar uma árvore seja alcançada, o algoritmo é encerrado precocemente.
+- **Bellman-Ford** — Implementação dinâmica que percorre a lista de arestas $V - 1$ vezes (onde $V$ é a quantidade de vértices), atualizando as distâncias mínimas, e verifica uma última vez para averiguar a existência de ciclos negativos. Caso uma iteração por todas as arestas aconteça sem que nenhuma distância seja atualizada, o algoritmo é encerrado precocemente, já que todas as distâncias mínimas já foram encontradas.
 
-- **DFS** - Implementação recursiva caminhando uma vez por todos os nós do grafo, mesmo com grafos desconectados. Evita caminhar por nós usados com um array de booleanos marcando os nós usados.
-- **BFS** - Implementação iterativa usando uma Queue de nós para garantir o caminhamento em largura e array de booleanos marcando nós usados. Caminha por todos os nós do grafo mesmo que seja desconectado.
-- **Kruskal** - Implementação gulosa ordenando a lista de arestas por seus pesos e escolhendo sempre a menor aresta disponível que não gera ciclos para adicionar na árvore. A implementação da Dsu usa um array de inteiros para representar os pais, sendo as raízes dos componentes representados por números negativos indicando a quantidade de vértices em seu componente e um inteiro representando o pai do vértice para os outros casos. Caso a quantidade de arestas necessária para formar uma árvore seja alcançada, o algoritmo é encerrado precocemente.
-- **Bellman Ford** - Implementação dinâmica que percorre a lista de arestas V (quantidade de vértices) - 1 vezes atualizando as distâncias mínimas e verificando uma última vez para averiguar a existência de ciclos negativos. Caso uma iteração por todas as arestas aconteça sem que nenhuma distância seja atualizada, o algoritmo é encerrado precocemente, já que todas as distâncias mínimas foram encontradas.
+> Para melhor entendimento do funcionamento de cada algoritmo, verifique as versões didáticas dos códigos nas duas linguagens usadas no projeto no diretório `algoritmos`.
 
-Para melhor entendimento do funcionamento de cada algoritmo, verifique as versões didáticas dos códigos nas duas linguagens usadas no projeto no diretório `algoritmos`.
+### Terceiro passo: Geração de entradas
 
-### Geração de entradas
+A geração dos grafos foi feita por meio de um algoritmo em Python, explorando 5 casos para cada algoritmo. Para os casos que testam densidades diferentes, é importante ressaltar que os grafos não seguem a proporção em relação à densidade máxima de um grafo, isto é, $V \cdot (V - 1)$. Ao invés disso, é usada uma proporção diferente calculada empiricamente. Para entender melhor essa escolha e o cálculo das proporções, confira a seção [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos).
 
-A geração dos grafos foi feita por meio de um algoritmo na linguagem de programação Python, explorando 5 casos para cada algoritmo. Para os casos que testam densidades diferentes é importante ressaltar que os grafos não seguem a proporção em relação a densidade máxima de um grafo, isto é, V * (V-1). Ao invés disso, é usada uma proporção linear calculada empiricamente. Para entender melhor essa escolha e cálculo das proporções confira a seção "Dúvidas importantes e esclarecimentos".
-
-**Tamanhos:** 10, 30, 100, 300, 1000, 3000, 10000, 30000, 100000
+**Tamanhos:** 10, 30, 100, 300, 1.000, 3.000, 10.000, 30.000, 100.000
 
 **Casos:** Melhor, Pressão, Esparso, Médio, Denso
 
-- **Melhor caso** - Se refere a um grafo que estimula o melhor caso teórico de cada algoritmo, usado como base para controle e previsibilidade do experimento e comparação com outros casos.
-- **Caso de pressão** - Se refere a grafos que estruturalmente pressionam as linguagens para evidenciar a diferença de performances, sem necessariamente forçar um pior caso teórico. Esses casos se aproximam mais de situações realistas de representações e armazenamento de grafos. Para entender melhor os casos de pressão para cada algoritmo confira a seção "Casos de teste".
-- **Esparso** - Caso com poucas arestas em relação ao número de vértices, mais precisamente 10% da densidade máxima calculada.
-- **Médio** - Caso com um número intermediário de arestas em relação ao número de vértices, mais precisamente 50% da densidade máxima calculada.
-- **Denso** - Caso com muitas arestas em relação ao número de vértices, mais precisamente 90% da densidade máxima calculada.
+- **Melhor caso** — Refere-se a um grafo que estimula o melhor caso teórico de cada algoritmo, usado como base para controle e previsibilidade do experimento e comparação com outros casos.
+- **Caso de pressão** — Refere-se a grafos que estruturalmente pressionam as linguagens para evidenciar a diferença de performance, sem necessariamente forçar um pior caso teórico. Esses casos se aproximam mais de situações realistas de representação e armazenamento de grafos. Para entender melhor os casos de pressão de cada algoritmo, confira a seção [Casos de teste](#casos-de-teste).
+- **Esparso** — Caso com poucas arestas em relação ao número de vértices, mais precisamente 10% da densidade máxima calculada.
+- **Médio** — Caso com um número intermediário de arestas em relação ao número de vértices, mais precisamente 50% da densidade máxima calculada.
+- **Denso** — Caso com muitas arestas em relação ao número de vértices, mais precisamente 90% da densidade máxima calculada.
 
-### Ambientes de teste e análise dos resultados
+### Quarto passo: Ambientes de teste e análise dos resultados
 
-Os testes foram rodados por meio de Benchmarks, utilizando as bibliotecas Google Benchmark para C++ e JMH (Java MicroBenchmark Harness) para Java, que mediram tempo de execução médio e pico de memória para cada caso de cada algoritmo variando o tamanho das entradas. Os resultados foram transferidos para arquivos `.json` que foram então interpretados por um script em Python com o uso da biblioteca Matplotlib para montar a representação visual dos gráficos. Para cada teste foram realizadas 3 rodadas de aquecimento e 7 execuções para Java e 7 execuções para C++ sem rodadas de aquecimento.
+Os testes foram rodados por meio de benchmarks, utilizando as bibliotecas Google Benchmark para C++ e JMH (Java MicroBenchmark Harness) para Java, que mediram o tempo de execução médio e o pico de memória para cada caso de cada algoritmo, variando o tamanho das entradas. Os resultados foram transferidos para arquivos `.json`, que foram então interpretados por um script em Python com o uso da biblioteca Matplotlib para montar a representação visual dos gráficos. Para cada teste foram realizadas 3 rodadas de aquecimento e 7 execuções para Java, e 7 execuções para C++ sem rodadas de aquecimento. Todos os testes foram realizados no mesmo computador, em uma sessão ininterrupta, apenas com o terminal aberto.
 
 ## Casos de teste
 
 ### DFS
 
-- **Melhor caso** - Árvore binária balanceada; a árvore binária balanceada permite que a altura da árvore permaneça no máximo em "logV 2" (formatar dps), o que faz com que para a maior entrada com 10^5 vértices, a altura máxima seja 17, o que mantém a pilha de recursão com uma quantidade pequena de vértices, otimizando todo o processo.
-- **Caso de pressão** - Grafo Linear; o grafo linear faz com que, para o maior número de vértices, o primeiro vértice esteja a 99.999 arestas de distância do último, estressando ao máximo o jeito que as linguagens tratam seus limites de chamadas recursivas. Exemplo realista: Sequência de edições em um arquivo de texto.
+- **Melhor caso — Árvore binária balanceada.** A árvore binária balanceada permite que a altura da árvore permaneça no máximo em $\log_2(V)$, o que faz com que, para a maior entrada com $10^5$ vértices, a altura máxima seja 17, o que mantém a pilha de recursão com uma quantidade pequena de vértices, otimizando todo o processo.
+- **Caso de pressão — Grafo linear.** O grafo linear faz com que, para o maior número de vértices, o primeiro vértice esteja a 99.999 arestas de distância do último, estressando ao máximo o jeito que as linguagens tratam seus limites de chamadas recursivas. *Exemplo realista:* sequência de edições em um arquivo de texto.
 
 ### BFS
 
-- **Melhor caso** - Grafo linear; o grafo linear permite que a fila da BFS armazene apenas um vértice simultaneamente, já que cada vértice só possui um vizinho não usado ainda. Isso otimiza o uso de memória e operações da fila.
-- **Caso de pressão** - Árvore binária balanceada; na árvore balanceada, os níveis mais baixos possuem muitos vértices, logo a fila precisa armazenar muitos elementos de uma vez no final da execução. Para o maior tamanho da entrada isso seria cerca de 500.000 vértices. Esse cenário testa a otimização de armazenamento em estruturas de dados para ambas as linguagens. Exemplo realista: Árvore de arquivos e diretórios em um computador.
+- **Melhor caso — Grafo linear.** O grafo linear permite que a fila da BFS armazene apenas um vértice simultaneamente, já que cada vértice só possui um vizinho ainda não usado. Isso otimiza o uso de memória e as operações da fila.
+- **Caso de pressão — Árvore binária balanceada.** Na árvore balanceada, os níveis mais baixos possuem muitos vértices, logo a fila precisa armazenar muitos elementos de uma vez no final da execução. Para o maior tamanho de entrada, isso seria cerca de 500.000 vértices. Esse cenário testa a otimização de armazenamento em estruturas de dados para ambas as linguagens. *Exemplo realista:* árvore de arquivos e diretórios em um computador.
 
 ### Kruskal
 
-- **Melhor caso** - Árvore binária balanceada ordenada; este grafo gera uma lista de arestas já ordenadas, não sendo gasto tempo com a ordenação e após o percorrimento de todas as arestas, a árvore fica pronta encerrando a execução no menor tempo possível.
-- **Caso de pressão** - Grafo fragmentado; esse grafo simula diversos grafos desconectados de tamanhos distintos, gerando um grau de desordem e forçando a DSU a não comprimir todos os caminhos rapidamente para evidenciar a diferença entre as linguagens. Exemplo realista: Grafo de seguidores em redes sociais, com alguns pontos servindo como hubs com grandes quantidades de vértices.
+- **Melhor caso — Árvore binária balanceada ordenada.** Este grafo gera uma lista de arestas já ordenadas, não sendo gasto tempo com a ordenação, e após o percorrimento de todas as arestas a árvore fica pronta, encerrando a execução no menor tempo possível.
+- **Caso de pressão — Grafo fragmentado.** Esse grafo simula diversos grafos desconectados de tamanhos distintos, gerando um grau de desordem e forçando a DSU a não comprimir todos os caminhos rapidamente, para evidenciar a diferença entre as linguagens. *Exemplo realista:* grafo de seguidores em redes sociais, com alguns pontos servindo como hubs com grandes quantidades de vértices.
 
-### Bellman Ford
+### Bellman-Ford
 
-- **Melhor caso** - Árvore binária balanceada; ao aplicar o algoritmo nesse grafo, todos os menores caminhos a partir da raiz serão encontrados em apenas uma iteração, já que só há como alcançar cada vértice por um caminho a partir da raiz de uma árvore, logo, na segunda iteração o algoritmo não realizará nenhuma troca encerrando a execução precocemente.
-- **Caso de pressão** - Grafo matriz invertido; esse grafo se trata de uma matriz saindo do vértice 1x1 e construindo ligações para a direita e para baixo com os próximos vértices. A execução é realizada saindo da última aresta até alcançar a primeira, garantindo que o algoritmo não irá se encerrar em apenas uma iteração. Esse cenário simula uma matriz em que há diversos caminhos para sair de um nó e chegar em outro, testando o armazenamento da estrutura e performance em ambas as linguagens. Exemplo realista: Casas em um jogo de tabuleiro.
+- **Melhor caso — Árvore binária balanceada.** Ao aplicar o algoritmo nesse grafo, todos os menores caminhos a partir da raiz serão encontrados em apenas uma iteração, já que só há como alcançar cada vértice por um único caminho a partir da raiz de uma árvore. Logo, na segunda iteração o algoritmo não realizará nenhuma troca, encerrando a execução precocemente.
+- **Caso de pressão — Grafo matriz invertido.** Esse grafo se trata de uma matriz saindo do vértice $1{\times}1$ e construindo ligações para a direita e para baixo com os próximos vértices. A execução é realizada saindo da última aresta até alcançar a primeira, garantindo que o algoritmo não irá se encerrar em apenas uma iteração. Esse cenário simula uma matriz em que há diversos caminhos para sair de um vértice e chegar em outro, testando o armazenamento da estrutura e a performance em ambas as linguagens. *Exemplo realista:* casas em um jogo de tabuleiro.
 
-Os casos esparsos, médios e densos são estruturalmente iguais para todos os algoritmos, com a única diferença sendo a adição de pesos aleatoriamente com valores entre -300 e 1000 para os casos de Kruskal e Bellman Ford. A quantidade de arestas para cada grafo é obtida através da fórmula explicada na seção "Dúvidas importantes e esclarecimentos" e as arestas também são geradas aleatoriamente da seguinte forma: enquanto o número exigido de arestas não foi alcançado, dois vértices aleatórios são selecionados. Caso não haja uma aresta entre eles ainda, a conexão é feita e adicionada na lista de arestas. Esse processo se repete até que seja obtido o número necessário de arestas.
+Os casos esparsos, médios e densos são estruturalmente iguais para todos os algoritmos, com a única diferença sendo a adição de pesos aleatórios com valores entre $-300$ e $1000$ para os casos de Kruskal e Bellman-Ford. A quantidade de arestas para cada grafo é obtida através da fórmula explicada na seção [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos), e as arestas também são geradas aleatoriamente da seguinte forma: enquanto o número exigido de arestas não for alcançado, dois vértices aleatórios são selecionados. Caso não haja uma aresta entre eles ainda, a conexão é feita e adicionada à lista de arestas. Esse processo se repete até que seja obtido o número necessário de arestas.
 
 ## Hipótese teórica
 
 Com base nos estudos teóricos feitos a partir das diferenças entre Java e C++ e das implementações dos quatro algoritmos de grafos, fizemos as seguintes previsões:
 
-1. Em todos os algoritmos, o tempo de execução da implementação em C++ tende a ser mais rápido do que a de Java.
-2. Para um número de vértices muito grande, a DFS em Java tende a "estourar".
+1. Em todos os algoritmos, o tempo de execução da implementação em C++ tende a ser mais rápido do que o de Java.
+2. Para um número de vértices muito grande, a DFS em Java tende a estourar a pilha de recursão.
 3. Nas implementações em Java, o pico de memória será maior nas primeiras repetições, visto que terá as alocações de memória para o garbage collector.
+4. A eficiência dos algoritmos, na análise do melhor caso de cada um, deve se aproximar da complexidade teórica estudada.
 
 ## Análise dos resultados
 
+### Pico de memória RAM utilizada nas duas linguagens
+
+Na escolha de qual linguagem escolher para cada caso de algoritmo, o pico de memória utilizada é uma métrica extremamente relevante a ser analisada, visto que será impactada pela quantidade de recursos disponíveis para rodar o programa.
+
+Diferentemente do C++, que realiza alocações prévias na memória quase desprezíveis, a JVM do Java irá carregar várias classes que serão utilizadas no programa, inicializar o compilador e reservar uma quantidade de memória que ficará disponível para uso. Tudo isso é feito de forma fixa, sem influência do tamanho do programa que será executado. Por isso, em alguns casos, como o Bellman-Ford denso, o pico de memória em Java fica totalmente ofuscado por conta dessas reservas de memória e operações realizadas. Já em outros casos, como no gráfico de BFS médio abaixo, em um certo ponto, por volta de 30.000 vértices, como as estruturas de dados do algoritmo passam a ocupar mais memória do que o custo fixo da JVM, é observado um aumento drástico no pico de memória. Veja os dois gráficos abaixo:
+
+<table>
+  <tr>
+    <td align="center"><b>Bellman-Ford — caso denso</b><br><img src="graficos/memoria/BellmanFord_denso.png" width="380"></td>
+    <td align="center"><b>BFS — caso médio</b><br><img src="graficos/memoria/BFS_medio.png" width="380"></td>
+  </tr>
+</table>
+
+### Tempo de execução de cada algoritmo para ambas as linguagens
+
+**DFS — gráfico melhor caso, pior caso**
+
+<table>
+  <tr>
+    <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/DFS_melhor.png" width="380"></td>
+    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/DFS_pior.png" width="380"></td>
+  </tr>
+</table>
+
+Como pode ser visto, o gráfico de tempo de execução da DFS, tanto no melhor caso quanto no pior caso, se aproxima muito da complexidade teórica de $O(V + E)$, apresentando um crescimento linear. O principal fator que diferencia os dois casos é o alcance de cada linguagem: enquanto C++ alcança cerca de 70.000 chamadas recursivas em todos os casos, suportando até o caso de 30.000 vértices, as pilhas de recursão em Java começam a estourar a partir de 10.000 vértices, com exceção do melhor caso — confirmando a hipótese feita anteriormente.
+
+Essa diferença entre as linguagens se deve provavelmente a alguns pontos-chave:
+
+- Por padrão, em geral C++ aloca mais memória inicialmente para a pilha de recursão do que Java, dependendo do sistema operacional.
+- Como a pilha de recursão é construída através de um empilhamento de *frames*, o tamanho desses frames influencia no preenchimento precoce da memória de recursão. Em Java, os objetos referenciados carregam mais informações do que estruturas equivalentes em C++, o que gera um *frame* menor para C++, possibilitando mais chamadas recursivas até estourar o limite. Isso pode ser atestado porque Java não possui uma otimização de chamada de cauda (*tail-call optimization*), diferentemente de C++, que possui essa otimização via compilador por meio da flag `-O2` (confira no arquivo `run-benchmark.sh`).
+
+**BFS — gráfico melhor caso, pior caso**
+
+<table>
+  <tr>
+    <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/BFS_melhor.png" width="380"></td>
+    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/BFS_pior.png" width="380"></td>
+  </tr>
+</table>
+
+Para a BFS, os gráficos também refletem a complexidade teórica de crescimento linear. É possível perceber que, para ambos os casos, a curva dentro de cada linguagem se mantém estável durante todos os testes, porém no pior caso a distância entre as curvas é maior em relação ao melhor caso. Isso indica que C++ lida melhor com uma sobrecarga na fila do que Java. Para o melhor caso, com a fila sempre possuindo apenas um nó, a diferença de performance não é tão discrepante. Isso se deve provavelmente ao overhead de Java, que contém um excesso de ponteiros para uma quantidade relevante de vértices, o que torna o acesso a objetos e o armazenamento ineficientes.
+
 ## Ameaças à validade do experimento
 
-1. **Hardware e heap** - Em alguns casos, como DFS denso, esparso e médio, a implementação em Java não apresentou resultados ao se aproximar de 10⁴ vértices, prejudicando a comparação nesses cenários.
-2. **Quantidade de repetições** - Cada caso de algoritmo foi repetido 7 vezes para a métrica de tempo de execução e 1 vez para medir o pico de memória, o que pode causar distorções.
-3. Como os grafos são gerados de forma controlada, o experimento pode não refletir com grafos usados na realidade.
-4. Não foram testados grafos com densidade máxima.
+1. **Resultados DFS** — Nas análises de tempo de execução da DFS em Java, exceto no melhor caso (em que o grafo é uma árvore balanceada), a pilha de recursão de Java fica sobrecarregada quando há um aumento grande no número de vértices, gerando erros de `StackOverflowError`. Além disso, na DFS em C++ foi colocada uma verificação de segurança, por motivos do hardware utilizado, em que para um número de vértices maior ou igual a 70.000 a execução do benchmark é encerrada, fazendo com que na análise do melhor caso a execução em C++ termine antes da execução em Java, mesmo sem estourar a pilha de execução.
+2. **Quantidade de repetições para tempo de execução** — Em cada caso de algoritmo foram feitas 3 repetições de aquecimento para Java e calculada a média entre 7 repetições de medição para a métrica de tempo de execução nas duas linguagens, o que pode causar distorções nos resultados medidos (visto que quanto mais repetições, mais fiel será o resultado observado).
+3. **Medição da memória** — Diferente da medição de tempo de execução, que utiliza séries de aquecimento e média de séries de repetições, a medição de memória é feita em um caso único (com apenas 1 série de aquecimento em Java), gerando distorções como maior pico de memória em Java para um número de vértices menor. A comparação, portanto, fica mais fiel ao analisar os números maiores de vértices.
+4. **Grafos gerados** — Os resultados do experimento são válidos em cenários com os grafos que foram gerados de forma controlada. Na utilização real, grafos são gerados de formas mais desiguais do que as testadas na análise desse projeto.
+5. **Densidade máxima não testada** — Não foram testados grafos com densidade máxima (para mais detalhes, veja a explicação detalhada da densidade dos grafos na seção [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos)).
 
 ## Conclusão
+
+*(a ser adicionada)*
+
+## Dúvidas importantes e esclarecimentos
+
+**Por que os tipos de grafos selecionados foram esses?**
+
+Para DFS e BFS, não há impacto no tempo de execução sendo as arestas ponderadas ou não; adicionar peso nas arestas só aumentaria a complexidade dos grafos desnecessariamente. Já para Kruskal e Bellman-Ford, as arestas precisam ter peso, já que envolvem otimização de custos dos grafos. A lista de adjacência para DFS e BFS facilita a verificação dos vizinhos de um vértice; já a lista de arestas para Kruskal e Bellman-Ford facilita a ordenação por pesos e o caminhamento por arestas.
+
+Tanto a DFS quanto a BFS permitem o uso de arestas bidirecionais, e sua escolha se deve ao fato de que a chance de vértices inalcançáveis para grafos com arestas bidirecionais é reduzida, já que é necessária apenas uma aresta conectada ao vértice. O algoritmo de Bellman-Ford exige que as arestas sejam unidirecionais, e para Kruskal não há diferença; portanto, por motivos de simplicidade, foi decidido usar o mesmo tipo de aresta do Bellman-Ford. Os vértices serem 1-indexados é uma escolha arbitrária para facilitar o entendimento.
+
+**Por que foram escolhidos esses números de vértices para os testes?**
+
+Grafos com tamanhos iguais a potências de 10, de $10^1$ a $10^5$, evidenciam bem a performance do algoritmo em casos básicos até casos extremos com grandes volumes de dados; potências acima de $10^5$ aumentam drasticamente o tempo de teste e a quantidade de operações para alguns casos, tornando os testes inviáveis. Os valores intermediários na proporção $1/3/10$ servem para preencher melhor os gráficos e evitar saltos bruscos de execução entre pontos vizinhos. Como a escala no gráfico cresce em proporção logarítmica, as proporções de 3 ficam aproximadamente no meio das potências de 10, já que $\log_3(10) \approx 0{,}48$.
+
+**Por que a execução do melhor caso da DFS em C++ para em 30.000?**
+
+Foi testado localmente o limite recursivo para C++, alcançando cerca de 70.000 chamadas antes do estouro de pilha. Para evitar um erro que interromperia a execução dos testes e potencialmente corromperia os dados obtidos, foi colocada uma trava no algoritmo dos testes para não executar os casos em C++ com mais de 70.000 vértices.
+
+**Grafo direcionado em Kruskal**
+
+Vale ressaltar que, apesar dos grafos em Kruskal serem direcionados, a DSU trata as conexões entre vértices de forma bidirecional, não se importando com a origem e o destino. Portanto, para fins do experimento, foi considerada árvore um grafo com componente único, com todos os vértices conectados e uma quantidade de arestas igual a $V - 1$, não sendo necessário um vértice raiz que alcance todos os outros.
+
+**Densidade dos grafos**
+
+Um grafo pode ser considerado denso se o número de arestas que possui se aproxima do número máximo para a quantidade de vértices, que seria $V \cdot (V - 1)$ para grafos direcionados. Porém, como o pior caso de Bellman-Ford apresenta complexidade assintótica $O(V \cdot E)$, um grafo denso testado com a maior entrada possível ($10^5$ vértices) teria na ordem de $10^{10}$ arestas, gerando um caso com cerca de $10^{15}$ operações. Esse número torna o caso inviável para testes, já que uma única execução tomaria cerca de 200 dias, e mesmo que o número fosse reduzido, qualquer densidade de arestas que se aproximasse da ordem de $V^2$ levaria um tempo além do aceitável.
+
+Logo, para esse experimento foi utilizada uma escala de crescimento de densidade linear, tomando uma constante como reguladora, através da seguinte fórmula:
+
+$$E(V) = k \cdot V \cdot \log V$$
+
+Essa fórmula é obtida tomando como base o limiar teórico da conectividade de Erdős–Rényi. Uma quantidade de arestas acima disso diminuiria muito a probabilidade de grafos desconectados serem gerados para entradas grandes, enfraquecendo a representatividade real do experimento. *(Note que o grafo aleatório de Erdős–Rényi é construído de forma diferente da desse experimento; portanto, a fórmula é uma estimativa grosseira.)*
+
+Quanto à constante $k$, foi obtida de forma empírica com um teste para o pior caso. Uma execução com $10^{10}$ operações demorou cerca de 3 minutos em Java, número que para 10 repetições resultava em um valor aceitável. A constante foi regulada a partir desse valor, seguindo uma proporção de 90%:
+
+$$O(V \cdot E) = 10^{10}$$
+$$10^5 \cdot E = 10^{10} \implies E = 10^5$$
+$$10^5 = k_{90} \cdot 10^5 \cdot \log(10^5)$$
+$$10^5 = k_{90} \cdot 10^5 \cdot 5 \log 10$$
+$$k_{90} = \dfrac{10^5}{10^5 \cdot 5} = 0{,}2$$
+
+Como essa constante é 90% da constante usada para os outros casos:
+
+$$k = \dfrac{0{,}2}{0{,}9} \approx 0{,}222\ldots$$
+
+Os casos esparsos e médios seguem uma proporção de 10% e 50% dessa constante, respectivamente.
+
+A desvantagem desse método é o baixo número de arestas para casos com poucos vértices: $E(10) = 0{,}2 \cdot 10 \log 10 = 2$. Por isso, para os outros algoritmos que não são tão limitados pelo tempo, são usadas 100 vezes mais arestas para todos os casos.
+
+**Tamanho dos componentes do grafo fragmentado**
+
+Para simular melhor um cenário real, o tamanho dos componentes do grafo não poderia ser igual para todos. Por isso, os vértices são divididos em $V / 5$ componentes com tamanhos decrescentes, seguindo a proporção:
+
+$$\frac{V}{i^{\,s}}$$
+
+onde $V$ é o número de vértices do grafo, $i$ é o índice do componente (começando em 2, para evitar um componente com todos os vértices) e $s$ é o fator de controle do quão desigual é a distribuição. Para esse experimento, foi arbitrariamente escolhido $s = 1{,}5$.
+
+Após a distribuição de tamanhos, caso a soma de todos os tamanhos não dê exatamente igual à quantidade de vértices, a diferença é subtraída do maior componente, já que ele é menos sensível a pequenas alterações. Por fim, são gerados $V / 5$ subgrafos aleatórios, garantidamente conectados.
+
+**Diferenças entre C++ e Java**
+
+*(a ser adicionada)*
 
 ## Referências
 
 - https://roadmap.sh/java/vs-cpp
 - https://cp-algorithms.com/
+- https://teses.usp.br/teses/disponiveis/104/104131/tde-12082019-155714/pt-br.html
