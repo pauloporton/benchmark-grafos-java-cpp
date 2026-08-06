@@ -1,9 +1,0 @@
-//roda os testes
-chmod +x run-benchmark.sh
-nohup ./run-benchmark.sh > log_execucao.txt 2>&1 &
-
-//verifica o progresso
-tail -f log_execucao.txt
-
-//verifica se ta rodando
-ps aux | grep run-benchmark
