@@ -66,9 +66,8 @@ O algoritmo repete um laço de relaxamento sobre todas as E arestas, e esse laç
 |---|---|---|
 | DFS | O(V + E) | O(V + E) |
 | BFS | O(V + E) | O(V + E) |
-| Kruskal | O(E log E) | O(E log E) |
+| Kruskal | O(E) | O(E log E) |
 | Bellman-Ford | O(E) | O(V · E) |
-
 
 ## Como rodar o experimento
 
