@@ -5,12 +5,12 @@ Projeto desenvolvido para a disciplina de Estrutura de Dados e Algoritmos do cur
 ## Sumário
 
 - [Introdução](#introdução)
-- [Contextualização](#contextualização)
-  - [Funcionamento das linguagens](#funcionamento-das-linguagens)
-  - [Descrição dos quatro algoritmos escolhidos](#descrição-dos-quatro-algoritmos-escolhidos)
 - [Como rodar o experimento](#como-rodar-o-experimento)
   - [Dependências](#dependências)
   - [Comandos](#comandos)
+- [Contextualização](#contextualização)
+  - [Funcionamento das linguagens](#funcionamento-das-linguagens)
+  - [Descrição dos quatro algoritmos escolhidos](#descrição-dos-quatro-algoritmos-escolhidos)
 - [Metodologia](#metodologia)
   - [Primeiro passo: Implementação dos grafos](#primeiro-passo-implementação-dos-grafos)
   - [Segundo passo: Implementação dos algoritmos](#segundo-passo-implementação-dos-algoritmos)
@@ -34,6 +34,33 @@ Projeto desenvolvido para a disciplina de Estrutura de Dados e Algoritmos do cur
 
 Java e C++ são duas linguagens de programação extremamente utilizadas nos mais diversos tipos de aplicações. Adotando abordagens distintas, C++ oferece um melhor controle de memória e tempo de execução, enquanto Java se destaca na portabilidade e acionamento automático do Garbage Collector. Na prática, o desempenho de um algoritmo pode ser diretamente impactado pela escolha da linguagem em que será implementado. Nesse projeto, iremos realizar um estudo comparativo de desempenho de algoritmos clássicos de grafos, avaliando sua eficiência na prática quando implementados nessas duas linguagens.
 
+## Como rodar o experimento
+
+### Dependências
+
+**Linguagens**
+- Java
+- C++
+- Python 3
+
+**Bibliotecas**
+- Maven
+- Matplotlib
+- Google Benchmark
+
+### Comandos
+
+```bash
+# roda os testes
+chmod +x run-benchmark.sh
+nohup ./run-benchmark.sh > log_execucao.txt 2>&1 &
+
+# verifica o progresso
+tail -f log_execucao.txt
+
+# verifica se ta rodando
+ps aux | grep run-benchmark
+```
 ## Contextualização
 
 Para avaliar a eficiência prática de BFS, DFS, Kruskal e Bellman-Ford em Java e C++, foram medidos o tempo de execução e o pico de memória utilizada em cada algoritmo, variando o tamanho e a estrutura dos grafos de entrada. Essas escolhas, visam identificar não apenas qual das duas linguagens é mais rápida, mas também em quais condições e por quais motivos a diferença de performance acontece.
@@ -75,34 +102,6 @@ O algoritmo repete um laço de relaxamento sobre todas as E arestas, que serve p
 | BFS | O(V + E) | O(V + E) |
 | Kruskal | O(V) | O(E log E) |
 | Bellman-Ford | O(E) | O(V · E) |
-
-## Como rodar o experimento
-
-### Dependências
-
-**Linguagens**
-- Java
-- C++
-- Python 3
-
-**Bibliotecas**
-- Maven
-- Matplotlib
-- Google Benchmark
-
-### Comandos
-
-```bash
-# roda os testes
-chmod +x run-benchmark.sh
-nohup ./run-benchmark.sh > log_execucao.txt 2>&1 &
-
-# verifica o progresso
-tail -f log_execucao.txt
-
-# verifica se ta rodando
-ps aux | grep run-benchmark
-```
 
 ## Metodologia
 
