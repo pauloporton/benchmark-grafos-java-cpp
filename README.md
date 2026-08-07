@@ -133,7 +133,7 @@ A geração dos grafos foi feita por meio de um algoritmo em Python, explorando 
 **Casos:** Melhor, Pressão, Esparso, Médio, Denso
 
 - **Melhor caso** — Refere-se a um grafo que estimula o melhor caso teórico de cada algoritmo, usado como base para controle e previsibilidade do experimento e comparação com outros casos.
-- **Caso de pressão** — Refere-se a grafos que estruturalmente pressionam as linguagens para evidenciar a diferença de performance, sem necessariamente forçar um pior caso teórico. Esses casos se aproximam mais de situações realistas de representação e armazenamento de grafos. Para entender melhor os casos de pressão de cada algoritmo, confira a seção [Casos de teste](#casos-de-teste).
+- **Caso de pressão** — Refere-se a grafos que estruturalmente pressionam as linguagens para evidenciar a diferença de performance, sem necessariamente forçar um pior caso teórico. Esses casos se aproximam mais de situações realistas de representação e armazenamento de grafos. Para entender melhor os casos de pressão de cada algoritmo, confira a seção [Casos de teste](#casos-de-teste) (Nos arquivos gerados, o caso de pressão está denominado como "pior" para simplificar).
 - **Esparso** — Caso com poucas arestas em relação ao número de vértices, mais precisamente 10% da densidade máxima calculada.
 - **Médio** — Caso com um número intermediário de arestas em relação ao número de vértices, mais precisamente 50% da densidade máxima calculada.
 - **Denso** — Caso com muitas arestas em relação ao número de vértices, mais precisamente 90% da densidade máxima calculada.
@@ -197,7 +197,7 @@ Diferentemente do C++, que realiza alocações prévias na memória quase despre
 <table>
   <tr>
     <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/DFS_melhor.png" width="380"></td>
-    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/DFS_pior.png" width="380"></td>
+    <td align="center"><b>Caso de pressão</b><br><img src="graficos/tempo/DFS_pior.png" width="380"></td>
   </tr>
 </table>
 
@@ -213,7 +213,7 @@ Essa diferença entre as linguagens se deve provavelmente a alguns pontos-chave:
 <table>
   <tr>
     <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/BFS_melhor.png" width="380"></td>
-    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/BFS_pior.png" width="380"></td>
+    <td align="center"><b>Caso de pressão</b><br><img src="graficos/tempo/BFS_pior.png" width="380"></td>
   </tr>
 </table>
 
@@ -224,7 +224,7 @@ Para a BFS, os gráficos também refletem a complexidade teórica de crescimento
 <table>
   <tr>
     <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/Kruskal_melhor.png" width="380"></td>
-    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/Kruskal_pior.png" width="380"></td>
+    <td align="center"><b>Caso de pressão</b><br><img src="graficos/tempo/Kruskal_pior.png" width="380"></td>
   </tr>
 </table>
 
@@ -239,7 +239,7 @@ Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma pare
 <table>
   <tr>
     <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/BellmanFord_melhor.png" width="380"></td>
-    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/BellmanFord_pior.png" width="380"></td>
+    <td align="center"><b>Caso de pressão</b><br><img src="graficos/tempo/BellmanFord_pior.png" width="380"></td>
   </tr>
 </table>
 
