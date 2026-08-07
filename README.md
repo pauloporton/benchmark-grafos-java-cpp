@@ -42,22 +42,32 @@ No projeto, realizamos um estudo comparativo de desempenho entre quatro algoritm
 **Busca em Profundidade (DFS)**
 O DFS é um algoritmo que tem como objetivo visitar todos os vértices alcançáveis de uma origem, explorando cada ramo o mais fundo possível antes de retroceder. Ele é usado por exemplo para detecção de ciclos, ordenação topológica e busca de componentes conexos.
 
-Cada vértice é visitado exatamente uma vez, marcado como usado logo na primeira visita, o que garante que nenhum vértice seja processado novamente, por isso é $O(V)$. Para cada vértice visitado, o algoritmo percorre sua lista de adjacência inteira para descobrir os vizinhos, e cada aresta aparece na lista de adjacência de seus dois extremos (grafo bidirecional). Como cada aresta é percorrida um número constante de vezes ao longo de toda a execução, o custo total de percorrer todas as listas de adjacência soma $O(E)$. Somando as duas parcelas, chega-se a $O(V + E)$.
+Cada vértice é visitado exatamente uma vez, marcado como usado logo na primeira visita, o que garante que nenhum vértice seja processado novamente. Para cada vértice visitado, o algoritmo percorre sua lista de adjacência inteira para descobrir os vizinhos, e cada aresta aparece na lista de adjacência de seus dois extremos (grafo bidirecional). Como cada aresta é percorrida um número constante de vezes ao longo de toda a execução.
+
 
 **Busca em Largura (BFS)**
 O BFS também é um algoritmo de percurso em grafos, mas com o objetivo de explorar os vértices por níveis de distância a partir de uma origem, visitando primeiro todos os vizinhos diretos antes de avançar. É o algoritmo indicado quando se busca o menor caminho em número de arestas, como em cálculo de grau de separação ou busca de redes.
 
-O raciocínio é o mesmo do DFS, muda apenas a estrutura de controle: no BFS, cada vértice entra e sai da fila exatamente uma vez, $O(V)$, e ao processar um vértice, a lista de adjacência inteira é percorrida para enfileirar os vizinhos não visitados, o que soma $O(E)$ ao longo de toda a execução. Por isso, BFS e DFS compartilham a mesma complexidade assintótica, $O(V + E)$, ainda que com constantes e padrões de acesso à memória diferentes.
+O raciocínio é o mesmo do DFS, muda apenas a estrutura de controle, que no BFS cada vértice entra e sai da fila exatamente uma vez O(V), e ao processar um vértice, a lista de adjacência inteira é percorrida para enfileirar os vizinhos não visitados, o que soma O(E) ao longo de toda a execução. Por isso, BFS e DFS compartilham a mesma complexidade assintótica, ainda que com constantes e padrões de acesso à memória diferentes.
+
 
 **Algoritmo de Kruskal**
 O Kruskal é um algoritmo guloso que tem como objetivo construir a árvore geradora mínima de um grafo ponderado e conexo, a subárvore que conecta todos os vértices com o menor peso total de arestas. É indicado em problemas de otimização de custo em redes, como projeto de infraestrutura de menor custo (elétrica, água, telecomunicações).
 
-Possui duas fases com custos distintos. A primeira é a ordenação das $E$ arestas por peso, que domina o tempo total, pois qualquer algoritmo de ordenação por comparação custa $O(E \log E)$. A segunda fase percorre as arestas já ordenadas uma única vez, $O(E)$, aplicando para cada uma duas operações de Union-Find, que com as otimizações de união por rank e compressão de caminho, cada operação custa $O(\alpha(V))$, onde $\alpha$ é a função inversa de Ackermann, na prática, uma constante menor que 5 para qualquer entrada realista. Logo, a segunda fase custa $O(E \cdot \alpha(V))$, que é dominada pela ordenação. Como $E \log E$ cresce mais rápido que $E \cdot \alpha(V)$, o termo de ordenação prevalece, resultando em $O(E \log E)$.
+Possui duas fases com custos distintos. A primeira é a ordenação das E arestas por peso. A segunda fase percorre as arestas já ordenadas uma única vez.
 
 **Algoritmo de Bellman-Ford**
 Tem como objetivo encontrar o caminho mínimo de um vértice de origem para todos os demais vértices de um grafo ponderado e direcionado. Ele é inidicado quando o grafo pode conter arestas de peso negativo, ou quando precisa detectar a existência de ciclos negativos.
 
-O algoritmo repete um laço de relaxamento sobre todas as $E$ arestas, e esse laço é executado até $V - 1$ vezes. Como cada uma das $V - 1$ rodadas custa $O(E)$, o custo total é $O(V . E)$. É essa multiplicação entre vértices e arestas que tornal o Bellman-Ford significativamente mais caro em grafos densos, onde E se aproxima de $V²$.
+O algoritmo repete um laço de relaxamento sobre todas as E arestas, e esse laço é executado até V - 1 vezes. É essa multiplicação entre vértices e arestas que torna o Bellman-Ford significativamente mais caro em grafos densos, onde E se aproxima de V^2
+
+
+| Algoritmo | Complexidade (melhor caso) | Complexidade (pior caso) |
+|---|---|---|
+| DFS | O(V + E) | O(V + E) |
+| BFS | O(V + E) | O(V + E) |
+| Kruskal | O(E log E) | O(E log E) |
+| Bellman-Ford | O(E) | O(V · E) |
 
 
 ## Como rodar o experimento
