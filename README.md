@@ -233,6 +233,7 @@ Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma pare
 - No caso de pressão, o grafo é bem fragmentado (cheio de pedaços soltos), o que deixa a DSU menos eficiente.
 - Em Java, cada aresta é um objeto solto na memória. Em C++, as arestas ficam todas juntinhas. Isso importa mais quando os dados estão bagunçados, como no caso de pressão.
 - A forma como cada linguagem ordena também pesa. Em C++ é mais rápido porque mexe direto na memória, em Java é mais lento porque mexe em objetos.
+- Apesar da complexidade do melhor caso teórico ser O(V) por uma ausência de necessidade de ordenação das arestas, as funções padrão de ordenação de C++ e Java não checam se a estrutura já está ordenada antes, por isso o cresimento se manteu próximo de V log V
 
 **Bellman-Ford — gráfico melhor caso, caso de pressão**
 
@@ -297,7 +298,7 @@ Um grafo pode ser considerado denso se o número de arestas que possui se aproxi
 
 Logo, para esse experimento foi utilizada uma escala de crescimento de densidade linear, tomando uma constante como reguladora, através da seguinte fórmula:
 
-$$E(V) = k \cdot V \cdot \log V$$
+$$E(V) = k \cdot V \cdot \log V$$ (base 10)
 
 Essa fórmula é obtida tomando como base o limiar teórico da conectividade de Erdős–Rényi. Uma quantidade de arestas acima disso diminuiria muito a probabilidade de grafos desconectados serem gerados para entradas grandes, enfraquecendo a representatividade real do experimento. *(Note que o grafo aleatório de Erdős–Rényi é construído de forma diferente da desse experimento; portanto, a fórmula é uma estimativa grosseira.)*
 
