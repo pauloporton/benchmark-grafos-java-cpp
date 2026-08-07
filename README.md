@@ -225,7 +225,7 @@ Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma pare
 
 - No caso de pressão, o grafo é bem fragmentado (cheio de pedaços soltos), o que deixa a DSU menos eficiente.
 - Em Java, cada aresta é um objeto solto na memória. Em C++, as arestas ficam todas juntinhas. Isso importa mais quando os dados estão bagunçados, como no caso de pressão.
-- A forma como cada linguagem ordena também pesa: em C++ é mais rápido porque mexe direto na memória; em Java é mais lento porque mexe em objetos.
+- A forma como cada linguagem ordena também pesa. Em C++ é mais rápido porque mexe direto na memória, em Java é mais lento porque mexe em objetos.
 
 **Bellman-Ford — gráfico melhor caso, pior caso**
 
@@ -238,9 +238,9 @@ Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma pare
 
 Os gráficos do Bellman-Ford também batem com a teoria: melhor caso quase linear (O(E)), caso de pressão crescendo mais rápido (O(V·E)). A diferença entre os dois casos é o quanto Java e C++ ficam parecidos: no melhor caso, quase iguais. No caso de pressão, Java varia bem mais. Isso acontece porque:
 
-- No melhor caso, o algoritmo termina rápido, então não dá tempo do Java "sofrer" com o Garbage Collector.
-- No caso de pressão, o algoritmo roda muito mais vezes, usa mais memória, e o Garbage Collector do Java entra em ação em momentos diferentes a cada teste — por isso os tempos variam mais.
-- Diferente do Kruskal, aqui Java e C++ tendem a se aproximar quando o algoritmo vira só uma sequência gigante de contas simples, porque depois que "esquenta", o Java compila isso quase tão bem quanto o C++.
+- No melhor caso, o algoritmo termina rápido, então não dá tempo do Java ser impactado com o Garbage Collector.
+- No caso de pressão, o algoritmo roda muito mais vezes, usa mais memória, e o Garbage Collector do Java entra em ação em momentos diferentes a cada teste, por isso os tempos variam mais.
+- Diferente do Kruskal, Java e C++ tendem a se aproximar quando o algoritmo vira só uma sequência gigante de contas simples, porque depois que "esquenta", o Java compila isso quase tão bem quanto o C++.
 
 ## Ameaças à validade do experimento
 
