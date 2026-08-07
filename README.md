@@ -192,7 +192,7 @@ Diferentemente do C++, que realiza alocações prévias na memória quase despre
 
 ### Tempo de execução de cada algoritmo para ambas as linguagens
 
-**DFS — gráfico melhor caso, pior caso**
+**DFS — gráfico melhor caso, caso de pressão**
 
 <table>
   <tr>
@@ -208,7 +208,7 @@ Essa diferença entre as linguagens se deve provavelmente a alguns pontos-chave:
 - Por padrão, em geral C++ aloca mais memória inicialmente para a pilha de recursão do que Java, dependendo do sistema operacional.
 - Como a pilha de recursão é construída através de um empilhamento de *frames*, o tamanho desses frames influencia no preenchimento precoce da memória de recursão. Em Java, os objetos referenciados carregam mais informações do que estruturas equivalentes em C++, o que gera um *frame* menor para C++, possibilitando mais chamadas recursivas até estourar o limite. Isso pode ser atestado porque Java não possui uma otimização de chamada de cauda (*tail-call optimization*), diferentemente de C++, que possui essa otimização via compilador por meio da flag `-O2` (confira no arquivo `run-benchmark.sh`).
 
-**BFS — gráfico melhor caso, pior caso**
+**BFS — gráfico melhor caso, caso de pressão**
 
 <table>
   <tr>
@@ -219,7 +219,7 @@ Essa diferença entre as linguagens se deve provavelmente a alguns pontos-chave:
 
 Para a BFS, os gráficos também refletem a complexidade teórica de crescimento linear. É possível perceber que, para ambos os casos, a curva dentro de cada linguagem se mantém estável durante todos os testes, porém no pior caso a distância entre as curvas é maior em relação ao melhor caso. Isso indica que C++ lida melhor com uma sobrecarga na fila do que Java. Para o melhor caso, com a fila sempre possuindo apenas um nó, a diferença de performance não é tão discrepante. Isso se deve provavelmente ao overhead de Java, que contém um excesso de ponteiros para uma quantidade relevante de vértices, o que torna o acesso a objetos e o armazenamento ineficientes.
 
-**Kruskal — gráfico melhor caso, pior caso**
+**Kruskal — gráfico melhor caso, caso de pressão**
 
 <table>
   <tr>
@@ -234,7 +234,7 @@ Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma pare
 - Em Java, cada aresta é um objeto solto na memória. Em C++, as arestas ficam todas juntinhas. Isso importa mais quando os dados estão bagunçados, como no caso de pressão.
 - A forma como cada linguagem ordena também pesa. Em C++ é mais rápido porque mexe direto na memória, em Java é mais lento porque mexe em objetos.
 
-**Bellman-Ford — gráfico melhor caso, pior caso**
+**Bellman-Ford — gráfico melhor caso, caso de pressão**
 
 <table>
   <tr>
