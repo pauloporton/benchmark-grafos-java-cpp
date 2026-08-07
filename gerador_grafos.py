@@ -291,7 +291,7 @@ def gerar_todos_os_grafos(diretorio_saida, seed, escalas, CASOS_POR_ALGORITMO):
                     continue
 
                 if algoritmo in ("Kruskal", "BellmanFord"):
-                    if algoritmo == "BellmanFord" and caso == "pior":
+                    if algoritmo == "BellmanFord" and caso == "pior" or algoritmo == "Kruskal" and caso == "melhor":
                         escrever_arquivo_com_peso(caminho, V, arestas, True)
                     else:
                         escrever_arquivo_com_peso(caminho, V, arestas)
