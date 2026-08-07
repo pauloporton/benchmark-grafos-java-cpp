@@ -59,14 +59,14 @@ O raciocínio é o mesmo do DFS, muda apenas a estrutura de controle, que no BFS
 
 
 **Algoritmo de Kruskal**
-O Kruskal é um algoritmo guloso que tem como objetivo construir a árvore geradora mínima de um grafo ponderado e conexo, a subárvore que conecta todos os vértices com o menor peso total de arestas. É indicado em problemas de otimização de custo em redes, como projeto de infraestrutura de menor custo (elétrica, água, telecomunicações).
+O Kruskal é um algoritmo guloso que tem como objetivo construir a árvore geradora mínima de um grafo ponderado e conexo, a subárvore que conecta todos os vértices com o menor peso total de arestas e sem gerar ciclos para garantir a propriedade de árvore. É indicado em problemas de otimização de custo em redes, como projeto de infraestrutura de menor custo (elétrica, água, telecomunicações).
 
-Possui duas fases com custos distintos. A primeira é a ordenação das E arestas por peso. A segunda fase percorre as arestas já ordenadas uma única vez.
+Possui duas fases com custos distintos. A primeira é a ordenação das E arestas por peso para aplicação do guloso sempre escolhendo a aresta de menor peso. A segunda fase percorre as arestas já ordenadas uma única vez. Primeiramente é verificado se a adição dessa aresta gera um ciclo considerando as que já foram adicionadas. Caso não gere, a aresta é adicionada no novo grafo e a próxima é verificada. Após cada adição de aresta, se o grafo gerado possuir V - 1 arestas, a árvore pôde ser formada, caso o laço termine e esse número não foi alcançado, não foi possível formar. A verificação de ciclos por padrão é feita utilizando o algoritmo de DSU, checando se os vértices estão no mesmo componente. Para entender melhor o funcionamento da DSU clique [aqui](https://cp-algorithms.com/data_structures/disjoint_set_union.html).
 
 **Algoritmo de Bellman-Ford**
-Tem como objetivo encontrar o caminho mínimo de um vértice de origem para todos os demais vértices de um grafo ponderado e direcionado. Ele é inidicado quando o grafo pode conter arestas de peso negativo, ou quando precisa detectar a existência de ciclos negativos.
+Bellman-Ford é um algoritmo que tem como objetivo encontrar o caminho mínimo de um vértice de origem para todos os demais vértices de um grafo ponderado e direcionado. Ele é indicado quando o grafo pode conter arestas de peso negativo ou até quando é preciso sinalizar a existência de ciclos negativos.
 
-O algoritmo repete um laço de relaxamento sobre todas as E arestas, e esse laço é executado até V - 1 vezes. É essa multiplicação entre vértices e arestas que torna o Bellman-Ford significativamente mais caro em grafos densos, onde E se aproxima de V^2
+O algoritmo repete um laço de relaxamento sobre todas as E arestas, que serve para atualizar a menor distância encontrada para aquele vértice. Ao realizar esse processo por V - 1 vezes, é garantido que serão calculadas corretamente as distâncias para todos os vértices do grafo (desde que não haja algum ciclo negativo). Para os vértices inalcançáveis, a distância para eles ficará igual a infinito.
 
 
 | Algoritmo | Complexidade (melhor caso) | Complexidade (pior caso) |
@@ -172,7 +172,7 @@ Com base nos estudos teóricos feitos a partir das diferenças entre Java e C++ 
 
 1. Em todos os algoritmos, o tempo de execução da implementação em C++ tende a ser mais rápido do que o de Java.
 2. Para um número de vértices muito grande, a DFS em Java tende a estourar a pilha de recursão.
-3. Nas implementações em Java, o pico de memória será maior nas primeiras repetições, visto que terá as alocações de memória para o garbage collector.
+3. Nas implementações em Java, o pico de memória será mais inconstante para as entradas menores, visto que as alocações de memória da JVM terão maior impacto do que as operações de fato do programa.
 4. A eficiência dos algoritmos, na análise do melhor caso de cada um, deve se aproximar da complexidade teórica estudada.
 
 ## Análise dos resultados
@@ -249,6 +249,10 @@ Os gráficos do Bellman-Ford também batem com a teoria: melhor caso quase linea
 - No caso de pressão, o algoritmo roda muito mais vezes, usa mais memória, e o Garbage Collector do Java entra em ação em momentos diferentes a cada teste, por isso os tempos variam mais.
 - Diferente do Kruskal, Java e C++ tendem a se aproximar quando o algoritmo vira só uma sequência gigante de contas simples, porque depois que "esquenta", o Java compila isso quase tão bem quanto o C++.
 
+<p align="center"><b>Caso denso</b><br><img src="graficos/tempo/BellmanFord_denso.png" width="450"></p>
+
+Como visto no gráfico acima, para o caso denso com um volume maior de arestas, o crescimento do tempo de execução cresce de forma ainda mais parecida com um crescimento quadrático, já que o número de arestas é na mesma ordem do número de vértices. É possível perceber também que para as quantidades maiores de vértices, há um salto brusco no tempo de execução do algoritmo. Isso ocorre porque a partir de um certo número de arestas, a probabilidade de ocorrer um ciclo negativo escolhendo os pesos de forma aleatória cresce muito, fazendo com que os grafos a partir de 3.000 arestas caiam no pior caso, forçando a execução do algoritmo até o final. Note também que para a maioria dos casos a diferença de performance entre Java e C++ é ínfima, possuindo pontos quase sobrepostos para alguns casos, o que indica que em alguns cenários, a escolha da linguagem não possui impacto significativo no tempo de execução.
+
 ## Ameaças à validade do experimento
 
 1. **Resultados DFS** — Nas análises de tempo de execução da DFS em Java, exceto no melhor caso (em que o grafo é uma árvore balanceada), a pilha de recursão de Java fica sobrecarregada quando há um aumento grande no número de vértices, gerando erros de `StackOverflowError`. Além disso, na DFS em C++ foi colocada uma verificação de segurança, por motivos do hardware utilizado, em que para um número de vértices maior ou igual a 70.000 a execução do benchmark é encerrada, fazendo com que na análise do melhor caso a execução em C++ termine antes da execução em Java, mesmo sem estourar a pilha de execução.
@@ -259,7 +263,13 @@ Os gráficos do Bellman-Ford também batem com a teoria: melhor caso quase linea
 
 ## Conclusão
 
-*(a ser adicionada)*
+A partir dos resultados do experimento, tendo em vista a metodologia adotada pelo estudo e que os gráficos de tempo de execução se aproximaram bastante da hipótese assintótica prevista, observam-se os seguintes fatos: 
+
+- Os tempos de execução dos algoritmos em Java mostraram-se não muito distantes dos em C++, contrariando a hipótese feita antes do experimento. Acreditávamos que os em C++ sempre seriam muito superiores. Na realidade, em alguns casos (como o Bellman-Ford denso), as linhas chegavam a se sobrepor, o que indica que o tempo de execução nas duas linguagens, para um número maior de vértices e após séries de aquecimento no java, pode ser sim muito semelhante. Mesmo assim, o tempo de execução do C++, no geral, foi mais rápido.
+- Nas análises de pico de memória, o Java provou-se menos eficiente do que o C++, confirmando a previsão feita no início do estudo. Em todos os gráficos gerados, o Java teve um pico muito mais alto e, em muitos cenários, inconstância na forma de alocar essa memória, em que um número de vértices menor gerava um pico mais alto do que com números maiores de vértices, tornando-se, na metodologia adotada pelo experimento, muito difícil prever o pico de memória para entradas pequenas (como discutido na seção de ameaças a validade).
+
+Portanto, a partir desse estudo, pode-se concluir que a escolha de qual linguagem utilizar para seu programa deve levar em conta diversos fatores. Para cenários em que haverá um grande volume de operações ou em que a disponibilidade de recursos de memória é mais baixa, como sistemas embarcados ou máquinas com hardware limitado, visando melhor manejo dos recursos e performance, o C++ acaba sendo uma escolha mais racional. Já quando não há essa preocupação por recursos e tempo de execução quase perfeito, o Java é uma ótima escolha, além de entregar mais facilidade pro programador e uma boa portabilidade para o programa.
+
 
 ## Dúvidas importantes e esclarecimentos
 
@@ -316,10 +326,6 @@ $$\frac{V}{i^{\,s}}$$
 onde $V$ é o número de vértices do grafo, $i$ é o índice do componente (começando em 2, para evitar um componente com todos os vértices) e $s$ é o fator de controle do quão desigual é a distribuição. Para esse experimento, foi arbitrariamente escolhido $s = 1{,}5$.
 
 Após a distribuição de tamanhos, caso a soma de todos os tamanhos não dê exatamente igual à quantidade de vértices, a diferença é subtraída do maior componente, já que ele é menos sensível a pequenas alterações. Por fim, são gerados $V / 5$ subgrafos aleatórios, garantidamente conectados.
-
-**Diferenças entre C++ e Java**
-
-*(a ser adicionada)*
 
 ## Referências
 
