@@ -212,23 +212,31 @@ Essa diferença entre as linguagens se deve provavelmente a alguns pontos-chave:
 
 Para a BFS, os gráficos também refletem a complexidade teórica de crescimento linear. É possível perceber que, para ambos os casos, a curva dentro de cada linguagem se mantém estável durante todos os testes, porém no pior caso a distância entre as curvas é maior em relação ao melhor caso. Isso indica que C++ lida melhor com uma sobrecarga na fila do que Java. Para o melhor caso, com a fila sempre possuindo apenas um nó, a diferença de performance não é tão discrepante. Isso se deve provavelmente ao overhead de Java, que contém um excesso de ponteiros para uma quantidade relevante de vértices, o que torna o acesso a objetos e o armazenamento ineficientes.
 
-**Kruskal - gráfico melhor, pior**
+**Kruskal — gráfico melhor caso, pior caso**
+
+<table>
+  <tr>
+    <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/Kruskal_melhor.png" width="380"></td>
+    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/Kruskal_pior.png" width="380"></td>
+  </tr>
+</table>
 
 Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma parecida com uma reta na escala log-log. A diferença entre os dois casos está na distância entre Java e C++: no melhor caso essa distância é sempre a mesma. No caso de pressão, ela cresce bastante nas entradas maiores. Isso acontece porque:
-
-![Kruskal melhor caso](graficos/tempo/Kruskal_melhor.png)
-![Kruskal caso de pressão](graficos/tempo/Kruskal_pior.png)
 
 - No caso de pressão, o grafo é bem fragmentado (cheio de pedaços soltos), o que deixa a DSU menos eficiente.
 - Em Java, cada aresta é um objeto solto na memória. Em C++, as arestas ficam todas juntinhas. Isso importa mais quando os dados estão bagunçados, como no caso de pressão.
 - A forma como cada linguagem ordena também pesa: em C++ é mais rápido porque mexe direto na memória; em Java é mais lento porque mexe em objetos.
 
-**Bellman-Ford - gráfico melhor, pior**
+**Bellman-Ford — gráfico melhor caso, pior caso**
+
+<table>
+  <tr>
+    <td align="center"><b>Melhor caso</b><br><img src="graficos/tempo/BellmanFord_melhor.png" width="380"></td>
+    <td align="center"><b>Pior caso</b><br><img src="graficos/tempo/BellmanFord_pior.png" width="380"></td>
+  </tr>
+</table>
 
 Os gráficos do Bellman-Ford também batem com a teoria: melhor caso quase linear (O(E)), caso de pressão crescendo mais rápido (O(V·E)). A diferença entre os dois casos é o quanto Java e C++ ficam parecidos: no melhor caso, quase iguais. No caso de pressão, Java varia bem mais. Isso acontece porque:
-
-![Bellman-Ford melhor caso](graficos/tempo/BellmanFord_melhor.png)
-![Bellman-Ford caso de pressão](graficos/tempo/BellmanFord_pior.png)
 
 - No melhor caso, o algoritmo termina rápido, então não dá tempo do Java "sofrer" com o Garbage Collector.
 - No caso de pressão, o algoritmo roda muito mais vezes, usa mais memória, e o Garbage Collector do Java entra em ação em momentos diferentes a cada teste — por isso os tempos variam mais.
