@@ -27,7 +27,7 @@ Projeto desenvolvido para a disciplina de Estrutura de Dados e Algoritmos do cur
   - [Tempo de execução de cada algoritmo para ambas as linguagens](#tempo-de-execução-de-cada-algoritmo-para-ambas-as-linguagens)
 - [Ameaças à validade do experimento](#ameaças-à-validade-do-experimento)
 - [Conclusão](#conclusão)
-- [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos)
+- [Decisões metodológicas detalhadas](#decisoes-metodologicas-detalhadas)
 - [Referências](#referências)
 
 ## Introdução
@@ -126,7 +126,7 @@ Os vértices são apenas representados como inteiros, não guardando informaçõ
 
 ### Terceiro passo: Geração de entradas
 
-A geração dos grafos foi feita por meio de um algoritmo em Python, explorando 5 casos para cada algoritmo. Para os casos que testam densidades diferentes, é importante ressaltar que os grafos não seguem a proporção em relação à densidade máxima de um grafo, isto é, $V \cdot (V - 1)$. Ao invés disso, é usada uma proporção diferente calculada empiricamente. Para entender melhor essa escolha e o cálculo das proporções, confira a seção [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos).
+A geração dos grafos foi feita por meio de um algoritmo em Python, explorando 5 casos para cada algoritmo. Para os casos que testam densidades diferentes, é importante ressaltar que os grafos não seguem a proporção em relação à densidade máxima de um grafo, isto é, $V \cdot (V - 1)$. Ao invés disso, é usada uma proporção diferente calculada empiricamente. Para entender melhor essa escolha e o cálculo das proporções, confira a seção [Decisões metodológicas detalhadas](#decisoes-metodologicas-detalhadas).
 
 **Tamanhos:** 10, 30, 100, 300, 1.000, 3.000, 10.000, 30.000, 100.000
 
@@ -164,7 +164,7 @@ Os testes foram rodados por meio de benchmarks, utilizando as bibliotecas Google
 - **Melhor caso — Árvore binária balanceada.** Ao aplicar o algoritmo nesse grafo, todos os menores caminhos a partir da raiz serão encontrados em apenas uma iteração, já que só há como alcançar cada vértice por um único caminho a partir da raiz de uma árvore. Logo, na segunda iteração o algoritmo não realizará nenhuma troca, encerrando a execução precocemente.
 - **Caso de pressão — Grafo matriz invertido.** Esse grafo se trata de uma matriz saindo do vértice $1{\times}1$ e construindo ligações para a direita e para baixo com os próximos vértices. A execução é realizada saindo da última aresta até alcançar a primeira, garantindo que o algoritmo não irá se encerrar em apenas uma iteração. Esse cenário simula uma matriz em que há diversos caminhos para sair de um vértice e chegar em outro, testando o armazenamento da estrutura e a performance em ambas as linguagens. *Exemplo realista:* casas em um jogo de tabuleiro.
 
-Os casos esparsos, médios e densos são estruturalmente iguais para todos os algoritmos, com a única diferença sendo a adição de pesos aleatórios com valores entre $-300$ e $1000$ para os casos de Kruskal e Bellman-Ford. A quantidade de arestas para cada grafo é obtida através da fórmula explicada na seção [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos), e as arestas também são geradas aleatoriamente da seguinte forma: enquanto o número exigido de arestas não for alcançado, dois vértices aleatórios são selecionados. Caso não haja uma aresta entre eles ainda, a conexão é feita e adicionada à lista de arestas. Esse processo se repete até que seja obtido o número necessário de arestas.
+Os casos esparsos, médios e densos são estruturalmente iguais para todos os algoritmos, com a única diferença sendo a adição de pesos aleatórios com valores entre $-300$ e $1000$ para os casos de Kruskal e Bellman-Ford. A quantidade de arestas para cada grafo é obtida através da fórmula explicada na seção [Decisões metodológicas detalhadas](#decisoes-metodologicas-detalhadas), e as arestas também são geradas aleatoriamente da seguinte forma: enquanto o número exigido de arestas não for alcançado, dois vértices aleatórios são selecionados. Caso não haja uma aresta entre eles ainda, a conexão é feita e adicionada à lista de arestas. Esse processo se repete até que seja obtido o número necessário de arestas.
 
 ## Hipótese teórica
 
@@ -260,7 +260,7 @@ Como visto no gráfico acima, para o caso denso com um volume maior de arestas, 
 2. **Quantidade de repetições para tempo de execução** — Em cada caso de algoritmo foram feitas 3 repetições de aquecimento para Java e calculada a média entre 7 repetições de medição para a métrica de tempo de execução nas duas linguagens, o que pode causar distorções nos resultados medidos (visto que quanto mais repetições, mais fiel será o resultado observado).
 3. **Medição da memória** — Diferente da medição de tempo de execução, que utiliza séries de aquecimento e média de séries de repetições, a medição de memória é feita em um caso único (com apenas 1 série de aquecimento em Java), gerando distorções como maior pico de memória em Java para um número de vértices menor. A comparação, portanto, fica mais fiel ao analisar os números maiores de vértices.
 4. **Grafos gerados** — Os resultados do experimento são válidos em cenários com os grafos que foram gerados de forma controlada. Na utilização real, grafos são gerados de formas mais desiguais do que as testadas na análise desse projeto.
-5. **Densidade máxima não testada** — Não foram testados grafos com densidade máxima (para mais detalhes, veja a explicação detalhada da densidade dos grafos na seção [Dúvidas importantes e esclarecimentos](#dúvidas-importantes-e-esclarecimentos)).
+5. **Densidade máxima não testada** — Não foram testados grafos com densidade máxima (para mais detalhes, veja a explicação detalhada da densidade dos grafos na seção [Decisões metodológicas detalhadas](#decisoes-metodologicas-detalhadas)).
 
 ## Conclusão
 
@@ -272,7 +272,7 @@ A partir dos resultados do experimento, tendo em vista a metodologia adotada pel
 Portanto, a partir desse estudo, pode-se concluir que a escolha de qual linguagem utilizar para seu programa deve levar em conta diversos fatores. Para cenários em que haverá um grande volume de operações ou em que a disponibilidade de recursos de memória é mais baixa, como sistemas embarcados ou máquinas com hardware limitado, visando melhor manejo dos recursos e performance, o C++ acaba sendo uma escolha mais racional. Já quando não há essa preocupação por recursos e tempo de execução quase perfeito, o Java é uma ótima escolha, além de entregar mais facilidade pro programador e uma boa portabilidade para o programa.
 
 
-## Dúvidas importantes e esclarecimentos
+## Decisões metodológicas detalhadas
 
 **Por que os tipos de grafos selecionados foram esses?**
 
