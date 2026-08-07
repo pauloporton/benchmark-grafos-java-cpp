@@ -6,6 +6,7 @@ Projeto desenvolvido para a disciplina de Estrutura de Dados e Algoritmos do cur
 
 - [Introdução](#introdução)
 - [Contextualização](#contextualização)
+  - [Funcionamento das linguagens](#funcionamento-das-linguagens)
   - [Descrição dos quatro algoritmos escolhidos](#descrição-dos-quatro-algoritmos-escolhidos)
 - [Como rodar o experimento](#como-rodar-o-experimento)
   - [Dependências](#dependências)
@@ -35,7 +36,13 @@ Java e C++ são duas linguagens de programação extremamente utilizadas nos mai
 
 ## Contextualização
 
-No projeto, realizamos um estudo comparativo de desempenho entre quatro algoritmos clássicos de grafos: BFS, DFS, Kruskal e Bellman-Ford. Avaliamos a eficiência prática quando implementados em Java e em C++. Para fazer essa distinção, foram medidos o tempo de execução e o pico de memória utilizada em cada algoritmo, variando o tamanho e a estrutura dos grafos de entrada, para identificar não apenas qual das duas linguagens é mais rápida, mas também em quais condições e por quais motivos a diferença acontece.
+Para avaliar a eficiência prática de BFS, DFS, Kruskal e Bellman-Ford em Java e C++, foram medidos o tempo de execução e o pico de memória utilizada em cada algoritmo, variando o tamanho e a estrutura dos grafos de entrada. Essas escolhas, visam identificar não apenas qual das duas linguagens é mais rápida, mas também em quais condições e por quais motivos a diferença de performance acontece.
+
+### Funcionamento das linguagens
+
+Java é uma linguagem compilada e interpretada, em que, durante o processo de rodar um programa, ele será transformado em uma versão em bytecode que ficará no formato para que uma máquina virtual (JVM) possa executá-la. Essa JVM realiza algumas alocações de memórias, guardando as classes do programa, métodos e variáveis a serem utilizados. Além disso, há um controle de memória não utilizada feito automaticamente pelo Garbage Collector. Durante o começo da execução de um programa, a JVM inicia interpretando linha por linha, o que é algo demorado, mas, após um tempo, identifica trechos executados com frequência por meio da compilação JIT, melhorando o tempo de execução. Essas otimizações feitas pelo Java, facilitam o trabalho do programador e são fundamentais para a portabilidade da linguagem, mas podem prejudicar o desempenho em certos momentos.
+
+Já o C++, é uma linguagem compilada em que o código é transformado diretamente em código de máquina nativo por um compilador, sem precisar ser transformado em bytecode e sem depender de uma máquina virtual para ser executado (fazendo com que perca portabilidade). Por conta disso, o programa já fica pronto para rodar diretamente no processador, tornando-se um processo muito mais rápido para execução do que no Java. Entretanto, a alocação e remoção de objetos na memória é feita manualmente pelo programador, já que não existe um Garbage Collector cuidando disso. Com isso, quem monta o programa tem muito mais controle sobre o uso de memória e desempenho, mas tem mais responsabilidades sobre os erros que podem ser causados.
 
 ### Descrição dos quatro algoritmos escolhidos
 
