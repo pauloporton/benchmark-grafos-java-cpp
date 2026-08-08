@@ -281,7 +281,7 @@ Tanto a DFS quanto a BFS permitem o uso de arestas bidirecionais, e sua escolha 
 
 **Por que foram escolhidos esses números de vértices para os testes?**
 
-Grafos com tamanhos iguais a potências de 10, de $10^1$ a $10^5$, evidenciam bem a performance do algoritmo em casos básicos até casos extremos com grandes volumes de dados; potências acima de $10^5$ aumentam drasticamente o tempo de teste e a quantidade de operações para alguns casos, tornando os testes inviáveis. Os valores intermediários na proporção $1/3/10$ servem para preencher melhor os gráficos e evitar saltos bruscos de execução entre pontos vizinhos. Como a escala no gráfico cresce em proporção logarítmica, as proporções de 3 ficam aproximadamente no meio das potências de 10, já que $\log_3(10) \approx 0{,}48$.
+Grafos com tamanhos iguais a potências de 10, de $10^1$ a $10^5$, evidenciam bem a performance do algoritmo em casos básicos até casos extremos com grandes volumes de dados; potências acima de $10^5$ aumentam drasticamente o tempo de teste e a quantidade de operações para alguns casos, tornando os testes inviáveis. Os valores intermediários na proporção $1/3/10$ servem para preencher melhor os gráficos e evitar saltos bruscos de execução entre pontos vizinhos. Como a escala no gráfico cresce em proporção logarítmica, as proporções de 3 ficam aproximadamente no meio das potências de 10, já que $\log_{10}(3) \approx 0{,}48$.
 
 **Por que a execução do melhor caso da DFS em C++ para em 30.000?**
 
@@ -297,7 +297,7 @@ Um grafo pode ser considerado denso se o número de arestas que possui se aproxi
 
 Logo, para esse experimento foi utilizada uma escala de crescimento de densidade linear, tomando uma constante como reguladora, através da seguinte fórmula:
 
-$$E(V) = k \cdot V \cdot \log V$$ (base 10)
+$$E(V) = k \cdot V \cdot \log_{10}(V)$$ (base 10)
 
 Essa fórmula é obtida tomando como base o limiar teórico da conectividade de Erdős–Rényi. Uma quantidade de arestas acima disso diminuiria muito a probabilidade de grafos desconectados serem gerados para entradas grandes, enfraquecendo a representatividade real do experimento. *(Note que o grafo aleatório de Erdős–Rényi é construído de forma diferente da desse experimento; portanto, a fórmula é uma estimativa grosseira.)*
 
