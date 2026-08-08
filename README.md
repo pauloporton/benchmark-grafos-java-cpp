@@ -230,8 +230,8 @@ Para a BFS, os gráficos também refletem a complexidade teórica de crescimento
 Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma parecida com uma reta na escala log-log. A diferença entre os dois casos está na distância entre Java e C++: no melhor caso essa distância é sempre a mesma. No caso de pressão, ela cresce bastante nas entradas maiores. Isso acontece porque:
 
 - No caso de pressão, o grafo é bem fragmentado (cheio de pedaços soltos), o que deixa a DSU menos eficiente.
-- Em Java, cada aresta é um objeto solto na memória. Em C++, as arestas ficam todas juntinhas. Isso importa mais quando os dados estão bagunçados, como no caso de pressão.
-- A forma como cada linguagem ordena também pesa. Em C++ é mais rápido porque mexe direto na memória, em Java é mais lento porque mexe em objetos.
+- Em Java, cada aresta é uma referência espalhada na memória. Em C++, as arestas ficam agrupadas em blocos na memória. Isso importa mais quando os dados estão bagunçados, como no caso de pressão.
+- A forma como cada linguagem ordena também pesa. Em C++ é mais rápido porque acessa referências diretamente na memória sequencialmente, em Java é mais lento porque é preciso realizar saltos grandes para pedaços diferentes da memória.
 - Apesar da complexidade do melhor caso teórico ser O(V) por uma ausência de necessidade de ordenação das arestas, as funções padrão de ordenação de C++ e Java não checam se a estrutura já está ordenada antes, por isso o cresimento se manteu próximo de V log V
 
 **Bellman-Ford — gráfico melhor caso, caso de pressão**
@@ -246,7 +246,7 @@ Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma pare
 Os gráficos do Bellman-Ford também batem com a teoria: melhor caso quase linear (O(E)), caso de pressão crescendo mais rápido (O(V·E)). A diferença entre os dois casos é o quanto Java e C++ ficam parecidos: no melhor caso, quase iguais. No caso de pressão, Java varia bem mais. Isso acontece porque:
 
 - No melhor caso, o algoritmo termina rápido, então não dá tempo do Java ser impactado com o Garbage Collector.
-- No caso de pressão, o algoritmo roda muito mais vezes, usa mais memória, e o Garbage Collector do Java entra em ação em momentos diferentes a cada teste, por isso os tempos variam mais.
+- Possivelmente, no caso de pressão, o algoritmo roda muito mais vezes, usa mais memória, e o Garbage Collector do Java entra em ação em momentos diferentes a cada teste, por isso os tempos variam mais.
 - Diferente do Kruskal, Java e C++ tendem a se aproximar quando o algoritmo vira só uma sequência gigante de contas simples, porque depois que "esquenta", o Java compila isso quase tão bem quanto o C++.
 
 <p align="center"><b>Caso denso</b><br><img src="graficos/tempo/BellmanFord_denso.png" width="450"></p>
