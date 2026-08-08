@@ -5,6 +5,7 @@ Projeto desenvolvido para a disciplina de Estrutura de Dados e Algoritmos do cur
 ## Sumário
 
 - [Introdução](#introdução)
+- [Objetivo](#objetivo)
 - [Como rodar o experimento](#como-rodar-o-experimento)
   - [Dependências](#dependências)
   - [Comandos](#comandos)
@@ -33,6 +34,10 @@ Projeto desenvolvido para a disciplina de Estrutura de Dados e Algoritmos do cur
 ## Introdução
 
 Java e C++ são duas linguagens de programação extremamente utilizadas nos mais diversos tipos de aplicações. Adotando abordagens distintas, C++ oferece um melhor controle de memória e tempo de execução, enquanto Java se destaca na portabilidade e acionamento automático do Garbage Collector. Na prática, o desempenho de um algoritmo pode ser diretamente impactado pela escolha da linguagem em que será implementado. Nesse projeto, iremos realizar um estudo comparativo de desempenho de algoritmos clássicos de grafos, avaliando sua eficiência na prática quando implementados nessas duas linguagens.
+
+## Objetivo
+
+Este projeto tem como objetivo comparar o desempenho de Java e C++ na implementação de quatro algoritmos de grafos (DFS, BFS, Kruskal e Bellman-Ford), medindo tempo de execução e pico de memória RAM em diferentes tamanhos e estruturas de grafos, buscando identificar em quais condições e por quais motivos a escolha da linguagem impacta a performance, verificar se os resultados se aproximam da complexidade teórica esperada e, por fim, orientar qual linguagem é mais adequada para diferentes cenários de uso.
 
 ## Como rodar o experimento
 
