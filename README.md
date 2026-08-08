@@ -37,7 +37,7 @@ Java e C++ são duas linguagens de programação extremamente utilizadas nos mai
 
 ## Objetivo
 
-Este projeto tem como objetivo comparar o desempenho de Java e C++ na implementação de quatro algoritmos de grafos (DFS, BFS, Kruskal e Bellman-Ford), medindo tempo de execução e pico de memória RAM em diferentes tamanhos e estruturas de grafos, buscando identificar em quais condições e por quais motivos a escolha da linguagem impacta a performance, verificar se os resultados se aproximam da complexidade teórica esperada e, por fim, orientar qual linguagem é mais adequada para diferentes cenários de uso.
+Este projeto tem como objetivo comparar o desempenho de Java e C++ na implementação de quatro algoritmos de grafos (DFS, BFS, Kruskal e Bellman-Ford), medindo tempo de execução e pico de memória RAM em diferentes tamanhos e estruturas de grafos, buscando identificar em quais condições e por quais motivos a escolha da linguagem impacta a desempenho, verificar se os resultados se aproximam da complexidade teórica esperada e, por fim, orientar qual linguagem é mais adequada para diferentes cenários de uso.
 
 ## Como rodar o experimento
 
@@ -68,13 +68,13 @@ ps aux | grep run-benchmark
 ```
 ## Contextualização
 
-Para avaliar a eficiência prática de BFS, DFS, Kruskal e Bellman-Ford em Java e C++, foram medidos o tempo de execução e o pico de memória utilizada em cada algoritmo, variando o tamanho e a estrutura dos grafos de entrada. Essas escolhas, visam identificar não apenas qual das duas linguagens é mais rápida, mas também em quais condições e por quais motivos a diferença de performance acontece.
+Para avaliar a eficiência prática de BFS, DFS, Kruskal e Bellman-Ford em Java e C++, foram medidos o tempo de execução e o pico de memória utilizada em cada algoritmo, variando o tamanho e a estrutura dos grafos de entrada. Essas escolhas visam identificar não apenas qual das duas linguagens é mais rápida, mas também em quais condições e por quais motivos a diferença de desempenho acontece.
 
 ### Funcionamento das linguagens
 
-Java é uma linguagem compilada e interpretada, em que, durante o processo de rodar um programa, ele será transformado em uma versão em bytecode que ficará no formato para que uma máquina virtual (JVM) possa executá-la. Essa JVM realiza algumas alocações de memórias, guardando as classes do programa, métodos e variáveis a serem utilizados. Além disso, há um controle de memória não utilizada feito automaticamente pelo Garbage Collector. Durante o começo da execução de um programa, a JVM inicia interpretando linha por linha, o que é algo demorado, mas, após um tempo, identifica trechos executados com frequência por meio da compilação JIT, melhorando o tempo de execução. Essas otimizações feitas pelo Java, facilitam o trabalho do programador e são fundamentais para a portabilidade da linguagem, mas podem prejudicar o desempenho em certos momentos.
+Java é uma linguagem compilada e interpretada, em que, durante o processo de rodar um programa, ele será transformado em uma versão em bytecode que ficará no formato para que uma máquina virtual (JVM) possa executá-la. Essa JVM realiza algumas alocações de memórias, guardando as classes do programa, métodos e variáveis a serem utilizados. Além disso, há um gerenciamento automático da memória não utilizada feito automaticamente pelo Garbage Collector. Durante o começo da execução de um programa, a JVM inicia interpretando linha por linha, o que é algo demorado, mas, após um tempo, identifica trechos executados com frequência por meio da compilação JIT, melhorando o tempo de execução. Essas otimizações feitas pelo Java facilitam o trabalho do programador e são fundamentais para a portabilidade da linguagem, mas podem prejudicar o desempenho em certos momentos.
 
-Já o C++, é uma linguagem compilada em que o código é transformado diretamente em código de máquina nativo por um compilador, sem precisar ser transformado em bytecode e sem depender de uma máquina virtual para ser executado (fazendo com que perca portabilidade). Por conta disso, o programa já fica pronto para rodar diretamente no processador, tornando-se um processo muito mais rápido para execução do que no Java. Entretanto, a alocação e remoção de objetos na memória é feita manualmente pelo programador, já que não existe um Garbage Collector cuidando disso. Com isso, quem monta o programa tem muito mais controle sobre o uso de memória e desempenho, mas tem mais responsabilidades sobre os erros que podem ser causados.
+Já o C++ é uma linguagem compilada em que o código é transformado diretamente em código de máquina nativo por um compilador, sem precisar ser transformado em bytecode e sem depender de uma máquina virtual para ser executado (fazendo com que perca portabilidade). Por conta disso, o programa já fica pronto para rodar diretamente no processador, tornando-se um processo muito mais rápido para execução do que no Java. Entretanto, a alocação e remoção de objetos na memória é feita manualmente pelo programador, já que não existe um Garbage Collector cuidando disso. Com isso, quem monta o programa tem muito mais controle sobre o uso de memória e desempenho, mas tem mais responsabilidades sobre os erros que podem ser causados.
 
 ### Descrição dos quatro algoritmos escolhidos
 
@@ -87,7 +87,7 @@ Cada vértice é visitado exatamente uma vez, marcado como usado logo na primeir
 **Busca em Largura (BFS)**
 O BFS também é um algoritmo de percurso em grafos, mas com o objetivo de explorar os vértices por níveis de distância a partir de uma origem, visitando primeiro todos os vizinhos diretos antes de avançar. É o algoritmo indicado quando se busca o menor caminho em número de arestas, como em cálculo de grau de separação ou busca de redes.
 
-O raciocínio é o mesmo do DFS, muda apenas a estrutura de controle, que no BFS cada vértice entra e sai da fila exatamente uma vez O(V), e ao processar um vértice, a lista de adjacência inteira é percorrida para enfileirar os vizinhos não visitados, o que soma O(E) ao longo de toda a execução. Por isso, BFS e DFS compartilham a mesma complexidade assintótica, ainda que com constantes e padrões de acesso à memória diferentes.
+O raciocínio é o mesmo do DFS, muda apenas a estrutura de controle, que no BFS cada vértice entra e sai da fila exatamente uma vez, totalizando O(V), e ao processar um vértice, a lista de adjacência inteira é percorrida para enfileirar os vizinhos não visitados, o que soma O(E) ao longo de toda a execução. Por isso, BFS e DFS compartilham a mesma complexidade assintótica, ainda que com constantes e padrões de acesso à memória diferentes.
 
 
 **Algoritmo de Kruskal**
@@ -124,20 +124,20 @@ Os vértices são apenas representados como inteiros, não guardando informaçõ
 - **DFS** — Implementação recursiva, caminhando uma vez por todos os vértices do grafo, mesmo com grafos desconectados. Evita caminhar por vértices usados com um array de booleanos marcando os vértices usados.
 - **BFS** — Implementação iterativa usando uma `Queue` de vértices para garantir o caminhamento em largura e um array de booleanos marcando vértices usados. Caminha por todos os vértices do grafo, mesmo que seja desconectado.
 - **Kruskal** — Implementação gulosa, ordenando a lista de arestas por seus pesos e escolhendo sempre a menor aresta disponível que não gera ciclos para adicionar à árvore. A implementação da DSU usa um array de inteiros para representar os pais, sendo as raízes dos componentes representadas por números negativos indicando a quantidade de vértices em seu componente, e um inteiro representando o pai do vértice para os outros casos. Caso a quantidade de arestas necessária para formar uma árvore seja alcançada, o algoritmo é encerrado precocemente.
-- **Bellman-Ford** — Implementação dinâmica que percorre a lista de arestas $V - 1$ vezes (onde $V$ é a quantidade de vértices), atualizando as distâncias mínimas, e verifica uma última vez para averiguar a existência de ciclos negativos. Caso uma iteração por todas as arestas aconteça sem que nenhuma distância seja atualizada, o algoritmo é encerrado precocemente, já que todas as distâncias mínimas já foram encontradas.
+- **Bellman-Ford** — Implementação dinâmica que percorre a lista de arestas $V - 1$ vezes (onde $V$ é a quantidade de vértices), atualizando as distâncias mínimas, e verifica uma última vez para identificar a existência de ciclos negativos. Caso uma iteração por todas as arestas aconteça sem que nenhuma distância seja atualizada, o algoritmo é encerrado precocemente, já que todas as distâncias mínimas já foram encontradas.
 
 > Para melhor entendimento do funcionamento de cada algoritmo, verifique as versões didáticas dos códigos nas duas linguagens usadas no projeto no diretório `algoritmos`.
 
 ### Terceiro passo: Geração de entradas
 
-A geração dos grafos foi feita por meio de um algoritmo em Python, explorando 5 casos para cada algoritmo. Para os casos que testam densidades diferentes, é importante ressaltar que os grafos não seguem a proporção em relação à densidade máxima de um grafo, isto é, $V \cdot (V - 1)$. Ao invés disso, é usada uma proporção diferente calculada empiricamente. Para entender melhor essa escolha e o cálculo das proporções, confira a seção [Decisões metodológicas detalhadas](#decisões-metodológicas-detalhadas).
+A geração dos grafos foi feita por meio de um algoritmo em Python, explorando 5 casos para cada algoritmo. Para os casos que testam densidades diferentes, é importante ressaltar que os grafos não seguem a proporção em relação à densidade máxima de um grafo, isto é, $V \cdot (V - 1)$. Em vez disso, é usada uma proporção diferente calculada empiricamente. Para entender melhor essa escolha e o cálculo das proporções, confira a seção [Decisões metodológicas detalhadas](#decisões-metodológicas-detalhadas).
 
 **Tamanhos:** 10, 30, 100, 300, 1.000, 3.000, 10.000, 30.000, 100.000
 
 **Casos:** Melhor, Pressão, Esparso, Médio, Denso
 
 - **Melhor caso** — Refere-se a um grafo que estimula o melhor caso teórico de cada algoritmo, usado como base para controle e previsibilidade do experimento e comparação com outros casos.
-- **Caso de pressão** — Refere-se a grafos que estruturalmente pressionam as linguagens para evidenciar a diferença de performance, sem necessariamente forçar um pior caso teórico. Esses casos se aproximam mais de situações realistas de representação e armazenamento de grafos. Para entender melhor os casos de pressão de cada algoritmo, confira a seção [Casos de teste](#casos-de-teste) (Nos arquivos gerados, o caso de pressão está denominado como "pior" para simplificar).
+- **Caso de pressão** — Refere-se a grafos que estruturalmente pressionam as linguagens para evidenciar a diferença de desempenho, sem necessariamente forçar um pior caso teórico. Esses casos se aproximam mais de situações realistas de representação e armazenamento de grafos. Para entender melhor os casos de pressão de cada algoritmo, confira a seção [Casos de teste](#casos-de-teste) (Nos arquivos gerados, o caso de pressão está denominado como "pior" para simplificar).
 - **Esparso** — Caso com poucas arestas em relação ao número de vértices, mais precisamente 10% da densidade máxima calculada.
 - **Médio** — Caso com um número intermediário de arestas em relação ao número de vértices, mais precisamente 50% da densidade máxima calculada.
 - **Denso** — Caso com muitas arestas em relação ao número de vértices, mais precisamente 90% da densidade máxima calculada.
@@ -150,8 +150,8 @@ Os testes foram rodados por meio de benchmarks, utilizando as bibliotecas Google
 
 ### DFS
 
-- **Melhor caso — Árvore binária balanceada.** A árvore binária balanceada permite que a altura da árvore permaneça no máximo em $\log_2(V)$, o que faz com que, para a maior entrada com $10^5$ vértices, a altura máxima seja 17, o que mantém a pilha de recursão com uma quantidade pequena de vértices, otimizando todo o processo.
-- **Caso de pressão — Grafo linear.** O grafo linear faz com que, para o maior número de vértices, o primeiro vértice esteja a 99.999 arestas de distância do último, estressando ao máximo o jeito que as linguagens tratam seus limites de chamadas recursivas. *Exemplo realista:* sequência de edições em um arquivo de texto.
+- **Melhor caso — Árvore binária balanceada.** A árvore binária balanceada permite que a altura da árvore seja no máximo em $\log_2(V)$, o que faz com que, para a maior entrada com $10^5$ vértices, a altura máxima seja 17, o que mantém a pilha de recursão com uma quantidade pequena de vértices, otimizando todo o processo.
+- **Caso de pressão — Grafo linear.** O grafo linear faz com que, para o maior número de vértices, o primeiro vértice esteja a 99.999 arestas de distância do último, impondo uma carga elevada recursiva para as linguagens a fim de entender como elas tratam seus limites de chamadas recursivas. *Exemplo realista:* sequência de edições em um arquivo de texto.
 
 ### BFS
 
@@ -166,7 +166,7 @@ Os testes foram rodados por meio de benchmarks, utilizando as bibliotecas Google
 ### Bellman-Ford
 
 - **Melhor caso — Árvore binária balanceada.** Ao aplicar o algoritmo nesse grafo, todos os menores caminhos a partir da raiz serão encontrados em apenas uma iteração, já que só há como alcançar cada vértice por um único caminho a partir da raiz de uma árvore. Logo, na segunda iteração o algoritmo não realizará nenhuma troca, encerrando a execução precocemente.
-- **Caso de pressão — Grafo matriz invertido.** Esse grafo se trata de uma matriz saindo do vértice $1{\times}1$ e construindo ligações para a direita e para baixo com os próximos vértices. A execução é realizada saindo da última aresta até alcançar a primeira, garantindo que o algoritmo não irá se encerrar em apenas uma iteração. Esse cenário simula uma matriz em que há diversos caminhos para sair de um vértice e chegar em outro, testando o armazenamento da estrutura e a performance em ambas as linguagens. *Exemplo realista:* casas em um jogo de tabuleiro.
+- **Caso de pressão — Grafo matriz invertido.** Esse grafo se trata de uma matriz saindo do vértice $1{\times}1$ e construindo ligações para a direita e para baixo com os próximos vértices. A execução é realizada saindo da última aresta até alcançar a primeira, garantindo que o algoritmo não irá se encerrar em apenas uma iteração. Esse cenário simula uma matriz em que há diversos caminhos para sair de um vértice e chegar em outro, testando o armazenamento da estrutura e a desempenho em ambas as linguagens. *Exemplo realista:* casas em um jogo de tabuleiro.
 
 Os casos esparsos, médios e densos são estruturalmente iguais para todos os algoritmos, com a única diferença sendo a adição de pesos aleatórios com valores entre $-300$ e $1000$ para os casos de Kruskal e Bellman-Ford. A quantidade de arestas para cada grafo é obtida através da fórmula explicada na seção [Decisões metodológicas detalhadas](#decisões-metodológicas-detalhadas), e as arestas também são geradas aleatoriamente da seguinte forma: enquanto o número exigido de arestas não for alcançado, dois vértices aleatórios são selecionados. Caso não haja uma aresta entre eles ainda, a conexão é feita e adicionada à lista de arestas. Esse processo se repete até que seja obtido o número necessário de arestas.
 
@@ -209,8 +209,8 @@ Como pode ser visto, o gráfico de tempo de execução da DFS, tanto no melhor c
 
 Essa diferença entre as linguagens se deve provavelmente a alguns pontos-chave:
 
-- Por padrão, em geral C++ aloca mais memória inicialmente para a pilha de recursão do que Java, dependendo do sistema operacional.
-- Como a pilha de recursão é construída através de um empilhamento de *frames*, o tamanho desses frames influencia no preenchimento precoce da memória de recursão. Em Java, os objetos referenciados carregam mais informações do que estruturas equivalentes em C++, o que gera um *frame* menor para C++, possibilitando mais chamadas recursivas até estourar o limite. Isso pode ser atestado porque Java não possui uma otimização de chamada de cauda (*tail-call optimization*), diferentemente de C++, que possui essa otimização via compilador por meio da flag `-O2` (confira no arquivo `run-benchmark.sh`).
+- Por padrão, em geral C++ aloca mais memória inicialmente para a pilha de recursão do que Java, dependendo do sistema operacional. Para a máquina utilizada no experimento, um teste rápido no terminal indicou que C++ reservou 8MB de memória enquanto Java reservou apenas 1MB.
+- Como a pilha de recursão é construída através de um empilhamento de *frames*, o tamanho desses frames influencia no preenchimento precoce da memória de recursão. Em Java, os objetos referenciados carregam mais informações do que estruturas equivalentes em C++, o que gera um frame menor para C++, possibilitando mais chamadas recursivas até estourar o limite.
 
 **BFS — gráfico melhor caso, caso de pressão**
 
@@ -221,7 +221,7 @@ Essa diferença entre as linguagens se deve provavelmente a alguns pontos-chave:
   </tr>
 </table>
 
-Para a BFS, os gráficos também refletem a complexidade teórica de crescimento linear. É possível perceber que, para ambos os casos, a curva dentro de cada linguagem se mantém estável durante todos os testes, porém no pior caso a distância entre as curvas é maior em relação ao melhor caso. Isso indica que C++ lida melhor com uma sobrecarga na fila do que Java. Para o melhor caso, com a fila sempre possuindo apenas um nó, a diferença de performance não é tão discrepante. Isso se deve provavelmente ao overhead de Java, que contém um excesso de ponteiros para uma quantidade relevante de vértices, o que torna o acesso a objetos e o armazenamento ineficientes.
+Para a BFS, os gráficos também refletem a complexidade teórica de crescimento linear. É possível perceber que, para ambos os casos, a curva dentro de cada linguagem se mantém estável durante todos os testes, porém no pior caso a distância entre as curvas é maior em relação ao melhor caso. Isso indica que C++ lida melhor com uma sobrecarga na fila do que Java. Para o melhor caso, com a fila sempre possuindo apenas um nó, a diferença de desempenho não é tão discrepante. Isso se deve provavelmente ao overhead de Java, que contém um excesso de ponteiros para uma quantidade relevante de vértices, o que torna o acesso a objetos e o armazenamento ineficientes.
 
 **Kruskal — gráfico melhor caso, caso de pressão**
 
@@ -237,7 +237,7 @@ Os gráficos do Kruskal batem com a teoria (O(E log E)), crescendo de forma pare
 - No caso de pressão, o grafo é bem fragmentado (cheio de pedaços soltos), o que deixa a DSU menos eficiente.
 - Em Java, cada aresta é uma referência espalhada na memória. Em C++, as arestas ficam agrupadas em blocos na memória. Isso importa mais quando os dados estão bagunçados, como no caso de pressão.
 - A forma como cada linguagem ordena também pesa. Em C++ é mais rápido porque acessa referências diretamente na memória sequencialmente, em Java é mais lento porque é preciso realizar saltos grandes para pedaços diferentes da memória.
-- Apesar da complexidade do melhor caso teórico ser O(V) por uma ausência de necessidade de ordenação das arestas, as funções padrão de ordenação de C++ e Java não checam se a estrutura já está ordenada antes, por isso o cresimento se manteu próximo de V log V
+- Apesar da complexidade do melhor caso teórico ser O(V) por uma ausência de necessidade de ordenação das arestas, as funções padrão de ordenação de C++ e Java não checam se a estrutura já está ordenada antes, por isso o cresimento se manteve próximo de V log V
 
 **Bellman-Ford — gráfico melhor caso, caso de pressão**
 
@@ -256,7 +256,7 @@ Os gráficos do Bellman-Ford também batem com a teoria: melhor caso quase linea
 
 <p align="center"><b>Caso denso</b><br><img src="graficos/tempo/BellmanFord_denso.png" width="450"></p>
 
-Como visto no gráfico acima, para o caso denso com um volume maior de arestas, o crescimento do tempo de execução cresce de forma ainda mais parecida com um crescimento quadrático, já que o número de arestas é na mesma ordem do número de vértices. É possível perceber também que para as quantidades maiores de vértices, há um salto brusco no tempo de execução do algoritmo. Isso ocorre porque a partir de um certo número de arestas, a probabilidade de ocorrer um ciclo negativo escolhendo os pesos de forma aleatória cresce muito, fazendo com que os grafos a partir de 3.000 arestas caiam no pior caso, forçando a execução do algoritmo até o final. Note também que para a maioria dos casos a diferença de performance entre Java e C++ é ínfima, possuindo pontos quase sobrepostos para alguns casos, o que indica que em alguns cenários, a escolha da linguagem não possui impacto significativo no tempo de execução.
+Como visto no gráfico acima, para o caso denso com um volume maior de arestas, o crescimento do tempo de execução cresce de forma ainda mais parecida com um crescimento quadrático, já que o número de arestas é na mesma ordem do número de vértices. É possível perceber também que para as quantidades maiores de vértices, há um salto brusco no tempo de execução do algoritmo. Isso ocorre porque a partir de um certo número de arestas, a probabilidade de ocorrer um ciclo negativo escolhendo os pesos de forma aleatória cresce muito, fazendo com que os grafos a partir de 3.000 arestas caiam no pior caso, forçando a execução do algoritmo até o final. Note também que para a maioria dos casos a diferença de desempenho entre Java e C++ é ínfima, possuindo pontos quase sobrepostos para alguns casos, o que indica que em alguns cenários, a escolha da linguagem não possui impacto significativo no tempo de execução.
 
 ## Ameaças à validade do experimento
 
@@ -270,10 +270,10 @@ Como visto no gráfico acima, para o caso denso com um volume maior de arestas, 
 
 A partir dos resultados do experimento, tendo em vista a metodologia adotada pelo estudo e que os gráficos de tempo de execução se aproximaram bastante da hipótese assintótica prevista, observam-se os seguintes fatos: 
 
-- Os tempos de execução dos algoritmos em Java mostraram-se não muito distantes dos em C++, contrariando a hipótese feita antes do experimento. Acreditávamos que os em C++ sempre seriam muito superiores. Na realidade, em alguns casos (como o Bellman-Ford denso), as linhas chegavam a se sobrepor, o que indica que o tempo de execução nas duas linguagens, para um número maior de vértices e após séries de aquecimento no java, pode ser sim muito semelhante. Mesmo assim, o tempo de execução do C++, no geral, foi mais rápido.
-- Nas análises de pico de memória, o Java provou-se menos eficiente do que o C++, confirmando a previsão feita no início do estudo. Em todos os gráficos gerados, o Java teve um pico muito mais alto e, em muitos cenários, inconstância na forma de alocar essa memória, em que um número de vértices menor gerava um pico mais alto do que com números maiores de vértices, tornando-se, na metodologia adotada pelo experimento, muito difícil prever o pico de memória para entradas pequenas (como discutido na seção de ameaças a validade).
+- Os tempos de execução dos algoritmos em Java mostraram-se não muito distantes dos obtidos em C++, contrariando a hipótese feita antes do experimento. Acreditávamos que C++ sempre seria muito superior. Na realidade, em alguns casos (como o Bellman-Ford denso), as linhas chegavam a se sobrepor, o que indica que o tempo de execução nas duas linguagens, para um número maior de vértices e após séries de aquecimento no Java, pode ser sim muito semelhante. Mesmo assim, o tempo de execução do C++, no geral, foi mais rápido.
+- Nas análises de pico de memória, o Java provou-se menos eficiente do que o C++, confirmando a previsão feita no início do estudo. Em todos os gráficos gerados, o Java teve um pico muito mais alto e, em muitos cenários, inconstância na forma de alocar essa memória, em que um número de vértices menor gerava um pico mais alto do que com números maiores de vértices, tornando-se, na metodologia adotada pelo experimento, muito difícil prever o pico de memória para entradas pequenas (como discutido na seção de ameaças à validade).
 
-Portanto, a partir desse estudo, pode-se concluir que a escolha de qual linguagem utilizar para seu programa deve levar em conta diversos fatores. Para cenários em que haverá um grande volume de operações ou em que a disponibilidade de recursos de memória é mais baixa, como sistemas embarcados ou máquinas com hardware limitado, visando melhor manejo dos recursos e performance, o C++ acaba sendo uma escolha mais racional. Já quando não há essa preocupação por recursos e tempo de execução quase perfeito, o Java é uma ótima escolha, além de entregar mais facilidade pro programador e uma boa portabilidade para o programa.
+Portanto, a partir desse estudo, pode-se concluir que a escolha de qual linguagem utilizar para seu programa deve levar em conta diversos fatores. Para cenários em que haverá um grande volume de operações ou em que a disponibilidade de recursos de memória é mais baixa em condições similares às deste experimento, como sistemas embarcados ou máquinas com hardware limitado, visando melhor manejo dos recursos e desempenho, o C++ acaba sendo uma escolha mais racional. Já quando não há essa preocupação por recursos e pequenas otimizações do tempo de execução não são necessárias, o Java é uma ótima escolha, além de entregar mais facilidade pro programador e uma boa portabilidade para o programa.
 
 
 ## Decisões metodológicas detalhadas
@@ -286,7 +286,7 @@ Tanto a DFS quanto a BFS permitem o uso de arestas bidirecionais, e sua escolha 
 
 **Por que foram escolhidos esses números de vértices para os testes?**
 
-Grafos com tamanhos iguais a potências de 10, de $10^1$ a $10^5$, evidenciam bem a performance do algoritmo em casos básicos até casos extremos com grandes volumes de dados; potências acima de $10^5$ aumentam drasticamente o tempo de teste e a quantidade de operações para alguns casos, tornando os testes inviáveis. Os valores intermediários na proporção $1/3/10$ servem para preencher melhor os gráficos e evitar saltos bruscos de execução entre pontos vizinhos. Como a escala no gráfico cresce em proporção logarítmica, as proporções de 3 ficam aproximadamente no meio das potências de 10, já que $\log_{10}(3) \approx 0{,}48$.
+Grafos com tamanhos iguais a potências de 10, de $10^1$ a $10^5$, evidenciam bem a desempenho do algoritmo em casos básicos até casos extremos com grandes volumes de dados; potências acima de $10^5$ aumentam drasticamente o tempo de teste e a quantidade de operações para alguns casos, tornando os testes inviáveis. Os valores intermediários na proporção $1/3/10$ servem para preencher melhor os gráficos e evitar saltos bruscos de execução entre pontos vizinhos. Como a escala no gráfico cresce em proporção logarítmica, as proporções de 3 ficam aproximadamente no meio das potências de 10, já que $\log_{10}(3) \approx 0{,}48$.
 
 **Por que a execução do melhor caso da DFS em C++ para em 30.000?**
 
