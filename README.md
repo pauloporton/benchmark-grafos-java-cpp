@@ -297,7 +297,7 @@ Um grafo pode ser considerado denso se o número de arestas que possui se aproxi
 
 Logo, para esse experimento foi utilizada uma escala de crescimento de densidade linear, tomando uma constante como reguladora, através da seguinte fórmula:
 
-$$E(V) = k \cdot V \cdot \log_{10}(V)$$ (base 10)
+$$E(V) = k \cdot V \cdot \log_{10}(V)$$
 
 Essa fórmula é obtida tomando como base o limiar teórico da conectividade de Erdős–Rényi. Uma quantidade de arestas acima disso diminuiria muito a probabilidade de grafos desconectados serem gerados para entradas grandes, enfraquecendo a representatividade real do experimento. *(Note que o grafo aleatório de Erdős–Rényi é construído de forma diferente da desse experimento; portanto, a fórmula é uma estimativa grosseira.)*
 
